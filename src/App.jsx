@@ -1,14 +1,18 @@
 import './App.css';
-import Form from './components/Form/Form.jsx';
-import Profile from './components/Profile/Profile.jsx';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Navigation from './components/Navigation/Navigation.jsx';
+import Login from './components/Login/Login.jsx';
 import Register from './components/Register/Register.jsx';
+import Profile from './components/Profile/Profile.jsx';
+import Quote from './components/Quote/Quote.jsx';
 
 function App() {
   return (
     <div className="App">
-      <Form />
-      <Profile />
-      <Register />
+      <Navigation />
+      <div className="page">
+        <Profile />
+      </div>
     </div>
   )
 }

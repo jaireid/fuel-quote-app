@@ -1,26 +1,80 @@
-import './Profile.css';
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+  
+export default function Profile() {
+    const [validated, setValidated] = useState(false);
 
-export default function Profile(){
-    return(
-        <div class="container">
-            <section id="content">
-                <form action="">
-                    <h1>Profile Management</h1>
-                    <div>
-                        <input type="text" required maxlength='50' placeholder="Full Name" id="name"/>
-                    </div>
-                    <div>
-                        <input type="text" required maxlength='100' placeholder="Address 1" id="address1"/>
-                    </div>
-                    <div>
-                        <input type="text" maxlength='100' placeholder="Address 2" id="address2"/>
-                    </div>
-                    <div>
-                        <input type="text" required maxlength='100' placeholder="City" id="city" />
-                    </div>
-                    <div>
-                        <select type="text" requried id="state" class="form-select">
-                            <option selected>Select a state</option>
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+    }
+
+        setValidated(true);
+    };
+
+    return (
+        <>
+            <h1>Profile Management</h1>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="name">
+          			<Form.Label>Full Name</Form.Label>
+					<InputGroup hasValidation>
+						<Form.Control
+							type="text"
+							placeholder="Name"
+                            maxLength="50"
+							required
+						/>
+						<Form.Control.Feedback type="invalid">
+                            Please enter your full name.
+						</Form.Control.Feedback>
+					</InputGroup>
+        		</Form.Group>
+                <Form.Group className="mb-3" controlId="address1">
+          			<Form.Label>Address 1</Form.Label>
+					<InputGroup hasValidation>
+						<Form.Control
+							type="text"
+							placeholder="Street address or P.O. Box"
+                            maxLength="100"
+							required
+						/>
+						<Form.Control.Feedback type="invalid">
+                            Please enter your address.
+						</Form.Control.Feedback>
+					</InputGroup>
+        		</Form.Group>
+                <Form.Group className="mb-3" controlId="address2">
+                    <Form.Label>Address 2</Form.Label>
+                    <Form.Control 
+                        type="text"  
+                        placeholder="Apt, suite, unit, building, floor, ect." 
+                        maxLength="100"
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="city">
+          			<Form.Label>City</Form.Label>
+					<InputGroup hasValidation>
+						<Form.Control
+							type="text"
+							placeholder="Enter City"
+                            maxLength="100"
+							required
+						/>
+						<Form.Control.Feedback type="invalid">
+                            Please enter your city.
+						</Form.Control.Feedback>
+					</InputGroup>
+        		</Form.Group>
+                <Form.Group className="mb-3" controlId="state">
+          			<Form.Label>State</Form.Label>
+                    <InputGroup hasValidation>
+                        <Form.Select required>
+                            <option value="">Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
                             <option value="AZ">Arizona</option>
@@ -72,14 +126,36 @@ export default function Profile(){
                             <option value="WV">West Virginia</option>
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
-                        </select>
-                    </div>
-                    <div>
-                        <input type="text" required minlength='5' maxlength='9' placeholder="Zipcode" id="zipcode" />
-                    </div>
-                        <input type="submit" value="Save Changes" />
-                </form>            
-        </section>
-    </div>
-    )
-};
+                        </Form.Select>
+                        <Form.Control.Feedback type="invalid">
+                            Please select your state.
+						</Form.Control.Feedback>
+                    </InputGroup>
+        		</Form.Group>
+                <Form.Group className="mb-3" controlId="zipcode">
+          			<Form.Label>Zipcode</Form.Label>
+					<InputGroup hasValidation>
+						<Form.Control
+							type="text"
+							placeholder="Enter Zipcode"
+                            minLength="5"
+                            maxLength="9"
+							required
+						/>
+						<Form.Control.Feedback type="invalid">
+                            Please enter your zipcode.
+						</Form.Control.Feedback>
+					</InputGroup>
+        		</Form.Group>
+                <Button type="submit" variant="outline-dark">Save Changes</Button>
+            </Form>
+        </>
+
+                            
+    //                     </select>
+    //                 </div>
+    //                 <div>
+    //                     <input type="text" required minlength='5' maxlength='9' placeholder="" id="" />
+    //                 </div>
+    );
+}
