@@ -48,7 +48,7 @@ export default function Login() {
 					</InputGroup>
         		</Form.Group>
 				<Button type="submit" variant="outline-dark">Login</Button>{' '}
-				<Button href="#" variant="dark">Register</Button>
+				<Button href="/register" variant="dark">Register</Button>
 			</Form>
 		</>
 	)
