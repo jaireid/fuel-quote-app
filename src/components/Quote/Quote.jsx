@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Datetime from 'react-datetime';
 import InputGroup from 'react-bootstrap/InputGroup';
-import moment from 'moment';
 import {DatePicker} from 'reactstrap-date-picker'
-// import "react-datetime/css/react-datetime.css";
 
 export default function Quote() {
     const [gallons, setGallons] = useState('');
@@ -28,6 +25,11 @@ export default function Quote() {
         setDate(dT);
         setFmtValue(fD);
     };
+
+    const collectData = () => {
+        console.warn(gallons);
+        console.warn(date);
+    }
 
     return (
         <>
@@ -88,7 +90,13 @@ export default function Quote() {
                         readOnly
                     />
                 </Form.Group>
-                <Button type='submit' variant='outline-dark'>Request Quote</Button>
+                <Button 
+                    type='submit' 
+                    variant='outline-dark'
+                    onClick={collectData}
+                >
+                    Request Quote
+                </Button>
             </Form>
         </>
   );
