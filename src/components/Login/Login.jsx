@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
 	const [validated, setValidated] = useState(false);
@@ -17,6 +17,8 @@ export default function Login() {
 
         setValidated(true);
     };
+
+	let navigate = useNavigate();
 
 	return (
 		<>
@@ -50,7 +52,14 @@ export default function Login() {
 					</InputGroup>
         		</Form.Group>
 				<Button type='submit' variant='outline-dark'>Login</Button>{' '}
-				<Button href='/register' variant='dark'>Register</Button>
+				<Button 
+					variant='dark'
+					onClick={() => {
+						navigate('/register');
+					}}
+				>
+					Register
+				</Button>
 			</Form>
 		</>
 	)

@@ -3,8 +3,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navigation() {
+    let navigate = useNavigate();
+
     return (
         <Navbar bg='dark' variant='dark' expand='lg' sticky='top'>
             <Container>
@@ -17,10 +20,24 @@ export default function Navigation() {
                         <Nav.Link href='/profile'>Profile</Nav.Link>
                     </Nav>
                     <Form className='d-flex'>
-                         <Button href='/register' variant='light'>Sign Up</Button>
+                        <Button 
+                            variant='light'
+                            onClick={() => {
+                                navigate('/register');
+                            }}
+                        >
+                            Sign Up
+                        </Button>
                      </Form>
                     <Form className='d-flex'>
-                        <Button href='/login' variant='light'>Sign Out</Button>
+                        <Button 
+                            variant='light'
+                            onClick={() => {
+                                navigate('/login');
+                            }}
+                        >
+                            Sign Out
+                        </Button>
                     </Form>
                 </Navbar.Collapse>
             </Container>

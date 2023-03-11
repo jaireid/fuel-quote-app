@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import {DatePicker} from 'reactstrap-date-picker'
+import { DatePicker } from 'reactstrap-date-picker'
 
 export default function Quote() {
     const [gallons, setGallons] = useState('');
