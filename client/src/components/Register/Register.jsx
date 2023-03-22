@@ -5,6 +5,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 export default function Register() {
     const [validated, setValidated] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -15,6 +18,11 @@ export default function Register() {
     	}
 
         setValidated(true);
+
+        // Log user input
+        console.log(`Username: ${username}`);
+        console.log(`Password: ${password}`);
+        console.log(`Confirm Password: ${confirmPassword}`);
     };
 
     return (
@@ -29,6 +37,8 @@ export default function Register() {
 							type='text' 
 							placeholder='Username' 
 							required
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
 							Please choose a username.
@@ -42,6 +52,8 @@ export default function Register() {
 							type='password' 
 							placeholder='Password' 
 							required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
 							Please choose a password.
@@ -55,6 +67,8 @@ export default function Register() {
 							type='password' 
 							placeholder='Confirm Password' 
 							required
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
 							Please confirm password.
