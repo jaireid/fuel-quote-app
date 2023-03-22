@@ -5,6 +5,12 @@ import InputGroup from 'react-bootstrap/InputGroup';
   
 export default function Profile() {
     const [validated, setValidated] = useState(false);
+    const [name, setName] = useState('')
+    const [address1, setAddress1] = useState('')
+    const [address2, setAddress2] = useState('')
+    const [city, setCity] = useState('')
+    const [region, setRegion] = useState('')
+    const [zipcode, setZipcode] = useState('')
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -30,6 +36,8 @@ export default function Profile() {
 							placeholder='Name' 
                             maxLength='50' 
 							required
+                            value = {name}
+                            onChange={(e) => setName(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
                             Please enter your full name.
@@ -44,6 +52,8 @@ export default function Profile() {
 							placeholder='Street address or P.O. Box' 
                             maxLength='100' 
 							required
+                            value = {address1}
+                            onChange={(e) => setAddress1(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
                             Please enter your address.
@@ -56,6 +66,8 @@ export default function Profile() {
                         type='text' 
                         placeholder='Apt, suite, unit, building, floor, ect.' 
                         maxLength='100'
+                        value = {address2}
+                        onChange={(e) => setAddress2(e.target.value)}
                     />
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='city'>
@@ -66,6 +78,8 @@ export default function Profile() {
 							placeholder='Enter City' 
                             maxLength='100' 
 							required
+                            value = {city}
+                            onChange={(e) => setCity(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
                             Please enter your city.
@@ -75,7 +89,7 @@ export default function Profile() {
                 <Form.Group className='mb-3' controlId='state'>
           			<Form.Label>State</Form.Label>
                     <InputGroup hasValidation>
-                        <Form.Select required>
+                        <Form.Select required value={region} onChange={(e) => setRegion(e.target.value)}>
                             <option value="">Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -143,6 +157,8 @@ export default function Profile() {
                             minLength='5' 
                             maxLength='9' 
 							required
+                            value = {zipcode}
+                            onChange={(e) => setZipcode(e.target.value)}
 						/>
 						<Form.Control.Feedback type='invalid'>
                             Please enter your zipcode.
