@@ -36,7 +36,7 @@ export default function Navigation() {
                                 navigate('/login');
                             }}
                         >
-                            Sign Out
+                            Sign In
                         </Button>
                     </Form>
                 </Navbar.Collapse>

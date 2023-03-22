@@ -19,7 +19,7 @@ export default function Register() {
 
         setValidated(true);
 
-        // Log user input
+        // Log user input - will add username and password to database in future
         console.log(`Username: ${username}`);
         console.log(`Password: ${password}`);
         console.log(`Confirm Password: ${confirmPassword}`);

@@ -5,6 +5,11 @@ import InputGroup from 'react-bootstrap/InputGroup';
   
 export default function Profile() {
     const [validated, setValidated] = useState(false);
+    const [name, setName] = useState('');
+    const [address1, setAddress1] = useState('');
+    const [address2, setAddress2] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -15,6 +20,8 @@ export default function Profile() {
         }
 
         setValidated(true);
+
+            // enter name, address1, address2, city, state into database
     };
 
     return (

@@ -31,8 +31,26 @@ export default function Login() {
   };
 
   const handleSave = () => {
-    // Write the data to a file or send it to an API for storage
-    console.log(`Username: ${username}, Password: ${password}`);
+	//the following code will be replaced to check if the username/password match what is in the database
+	username_array = [user123, username22, dmrobbin, user_name];
+	password_array = [password123, password22, password445, password_password]
+
+	position = username_array.indexOf(username);
+	console.log(position);
+	if(position == -1)
+	{
+		console.log("no account with this username")
+	}
+	else if(password_array[position] == password)
+	{
+		//log user in
+	}
+	else
+	{
+		console.log("username or password is incorrect")
+	}
+
+    //console.log(`Username: ${username}, Password: ${password}`);
   };
 
   return (
