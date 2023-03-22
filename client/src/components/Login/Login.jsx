@@ -31,7 +31,7 @@ export default function Login() {
   };
 
   const handleSave = () => {
-    // Write the data to a file or send it to an API for storage
+	//will add to the database instead of logging in future
     console.log(`Username: ${username}, Password: ${password}`);
   };
 
