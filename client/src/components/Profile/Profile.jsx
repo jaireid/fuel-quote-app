@@ -21,6 +21,8 @@ export default function Profile() {
         }
 
         setValidated(true);
+
+                // enter name, address1, address2, city, state into database
     };
 
     return (
