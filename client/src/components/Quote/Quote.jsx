@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { DatePicker } from 'reactstrap-date-picker'
 
 export default function Quote() {
-    const [gallons, setGallons] = useState('');
-    const [date, setDate] = useState(new Date().toISOString());
+    const [quoteData, setQuoteData] = useState([{}]);
+    const [address, setAddress] = useState({});
+    // const [gallons, setGallons] = useState('');
+    // const [date, setDate] = useState(new Date().toISOString());
     const [fmtValue, setFmtValue]= useState(undefined);
     const [validated, setValidated] = useState(false);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/quotes/' + 1)
+            .then(
+                response => response.json()
+            )
+            .then(
+                data => {
+                    setQuoteData(data);
+                    // console.log(data);
+            })
+    }, []);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -26,11 +40,6 @@ export default function Quote() {
         setFmtValue(fD);
     };
 
-    const collectData = () => {
-        console.warn(gallons);
-        console.warn(date);
-    }
-
     return (
         <>
             <h1>Fuel Quote Form</h1>
@@ -42,8 +51,8 @@ export default function Quote() {
                         <Form.Control 
                             type='number' 
                             placeholder='Number of gallons' 
-                            value={gallons} 
-                            onChange={(event) => setGallons(event.target.value)} 
+                            // value={gallons} 
+                            // onChange={(event) => setGallons(event.target.value)} 
                             required
                         />
                         <Form.Control.Feedback type='invalid'>
@@ -55,7 +64,8 @@ export default function Quote() {
                     <Form.Label>Delivery Address</Form.Label>
                     <Form.Control 
                         type='text' 
-                        placeholder='123 Main Street' 
+                        value={quoteData.address || ''}
+                        // onChange={setAddress(quoteData.address)}
                         readOnly
                     />
                 </Form.Group>
@@ -65,7 +75,7 @@ export default function Quote() {
                             <DatePicker
                                 type='date'
                                 minDate={new Date().toString()}
-                                value={date} 
+                                // value={date} 
                                 onChange={(d,f) => handleChange(d, f)}
                                 required
                             />
@@ -78,7 +88,7 @@ export default function Quote() {
                     <Form.Label>Suggested Price</Form.Label>
                     <Form.Control 
                         type='text' 
-                        placeholder='4.50' 
+                        value={quoteData.price || ''} 
                         readOnly
                     />
                 </Form.Group>
@@ -86,14 +96,14 @@ export default function Quote() {
                     <Form.Label>Total Amount Due</Form.Label>
                     <Form.Control 
                         type='text' 
-                        placeholder='90' 
+                        value={quoteData.due || ''} 
                         readOnly
                     />
                 </Form.Group>
                 <Button 
                     type='submit' 
                     variant='outline-dark'
-                    onClick={collectData}
+                    // onClick={collectData}
                 >
                     Request Quote
                 </Button>
