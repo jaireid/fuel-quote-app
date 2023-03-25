@@ -2,3 +2,7 @@ GET http://localhost:3001/quotes
 
 ###
 GET http://localhost:3001/quotes/1
+
+###
+POST http://localhost:3001/quotes
+Content-Type: application/json
