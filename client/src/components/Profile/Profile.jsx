@@ -6,7 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 export default function Profile() {
     const [validated, setValidated] = useState(false);
     const [name, setName] = useState('')
-    const [address1, setAddress1] = useState('')
+    const [address1, setAddress1] = useState('') 
     const [address2, setAddress2] = useState('')
     const [city, setCity] = useState('')
     const [region, setRegion] = useState('')
@@ -22,8 +22,10 @@ export default function Profile() {
 
         setValidated(true);
 
-                // enter name, address1, address2, city, state into database
+        // enter name, address1, address2, city, state, zipcode into database (just logging for now)
+        console.log(`Name: ${name} Address 1: ${address1} Address 2: ${address2} City: ${city} State: ${region} Zip Code: ${zipcode}`)
     };
+
 
     return (
         <>
