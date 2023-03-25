@@ -8,14 +8,8 @@ describe('Login Component', () => {
     const wrapper = component.find(`[data-test='Login']`);
     expect(wrapper.length).toBe(1);
   });
-
-  it('should have two input fields', () => {
-    const component = shallow(<Login />);
-    const wrapper = component.find(`[data-test='input-field']`);
-    expect(wrapper.length).toBe(2);
-  });
-
-  it('should update the state when input fields change', () => {
+  
+  it('should update state when input fields change', () => {
     const component = shallow(<Login />);
     const usernameInput = component.find(`[data-test='input-field']`).at(0);
     const passwordInput = component.find(`[data-test='input-field']`).at(1);
@@ -27,6 +21,13 @@ describe('Login Component', () => {
     expect(component.state('password')).toEqual('testpassword');
   });
 
+  it('should have two input fields', () => {
+    const component = shallow(<Login />);
+    const wrapper = component.find(`[data-test='input-field']`);
+    expect(wrapper.length).toBe(2);
+  });
+
+
   it('should call handleSave function when save button is clicked', () => {
     const component = shallow(<Login />);
     const saveButton = component.find(`[data-test='save-button']`);
@@ -34,4 +35,5 @@ describe('Login Component', () => {
     saveButton.simulate('click');
     expect(handleSaveSpy).toHaveBeenCalled();
   });
+  
 });

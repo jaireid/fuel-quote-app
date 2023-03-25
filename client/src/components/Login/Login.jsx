@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login()
+{
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,6 +76,7 @@ export default function Login() {
           onClick={() => {
             navigate('/register');
           }}
+          
         >
           Register
         </Button>
