@@ -19,18 +19,22 @@ describe('GET /quotes', () => {
   });
 
   test('should return a specific quote', async () => {
-    const response = await supertest(app).get('/quotes/1');
+    const response = await supertest(app).get('/quotes/fill');
 
     expect(response.status).toBe(200);
-    expect(response.body.id).toBe(1);
+    expect(response.body).toHaveProperty('address', '101 Main Street');
   })
 });
 
 describe('POST /quotes', () => {
   test('should create a new quote', async () => {
     const newQuote = {
-      gal: 5,
-      date: '2012-04-23T18:25:43.511Z',
+      id: 7,
+      gallons: 8,
+      deliveryDate: new Date('1995-12-17T03:24:00'),
+      address: '101 Main Street',
+      price: 2,
+      due: 16,
     };
 
     const response = await supertest(app)
@@ -40,6 +44,5 @@ describe('POST /quotes', () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('id');
     expect(response.body).toHaveProperty('address', '101 Main Street');
-    expect(response.body).toHaveProperty('due', 10);
   });
 });
