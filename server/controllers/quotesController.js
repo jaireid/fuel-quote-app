@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+let fill = {
+    address: '101 Main Street',
+    price: 2
+};
+
 let quotes = [
-    { id: 1, gallons: 3, deliveryDate: '2012-04-23T18:25:43.511Z', address: '101 Main Street', price: 4.25, due: 12.75 },
-    { id: 2, galllons: 4, deliveryDate: '2012-04-23T18:25:43.511Z', address: '101 Main Street', price: 3, due: 12 }
+    { id: 1, gallons: 5, deliveryDate: null, address: '101 Main Street', price: 3, due: 15 },
+    { id: 2, gallons: 10, deliveryDate: null, address: '101 Main Street', price: 2, due: 20 },
 ];
 
 // Get all quotes from database
@@ -11,24 +16,32 @@ router.get('/', (req, res) => {
     res.json(quotes);
 });
 
-// Get a specific quote from database
-router.get('/:id', (req, res) => {
-    const quote = quotes.find(q => q.id === parseInt(req.params.id));
+// Get user data to fill quote
+router.get('/fill', (req, res) => {
+    const data = fill;
 
-    if (!quote) return res.status(404).send('Quote not found');
+    if (!data) return res.status(404).send('Fill info not found');
 
-    res.json(quote);
+    res.json(data);
 });
   
 // Create a new quote and send to database
 router.post('/', (req, res) => {
+    if (!req.body.gallons || !req.body.deliveryDate) {
+        res.status(400).send('Missing required fields');
+        return;
+    }
+
+    // const gallons = Number(req.body.gallons);
+    const price = fill.price;
+
     const quote = {
       id: quotes.length + 1,
-      gallons: req.body.gallons,
-      deliveryDate: req.body.deliveryDate,
+      gallons: Number(req.body.gallons),
+      deliveryDate: new Date(req.body.deliveryDate),
       address: '101 Main Street',
-      price: 2,
-      due: 10,
+      price: price,
+      due: Number(req.body.due),
     };
 
     quotes.push(quote);

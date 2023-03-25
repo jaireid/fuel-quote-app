@@ -7,20 +7,20 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 export default function Quote() {
-    const [quoteData, setQuoteData] = useState({});
+    const [fillData, setFillData] = useState({});
     const [putData, putQuoteData] = useState({});
     const [deliveryDate, setDeliveryDate] = useState(null);
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:3001/quotes/' + 1)
+        fetch('http://localhost:3001/quotes/fill')
             .then(
                 response => response.json()
             )
             .then(
                 data => {
-                    setQuoteData(data);
+                    setFillData(data);
             })
     }, []);
 
@@ -53,7 +53,10 @@ export default function Quote() {
         const { name, value } = event.target;
         // putQuoteData({ ...putData, [name]: value });
         if (name === "gallons") {
-            putQuoteData({ ...putData, gallons: value });
+            const suggestedPrice = fillData.price || 0;
+            const gallons = parseFloat(value) || 0;
+            const due = (gallons * suggestedPrice).toFixed(2);
+            putQuoteData({ ...putData, gallons, due });
         } 
     }
 
@@ -87,7 +90,7 @@ export default function Quote() {
                     <Form.Label>Delivery Address</Form.Label>
                     <Form.Control 
                         type='text' 
-                        value={quoteData.address || ''}
+                        value={fillData.address || ''}
                         readOnly
                     />
                 </Form.Group>
@@ -110,16 +113,16 @@ export default function Quote() {
                 <Form.Group className='mb-3' controlId='suggestedPrice'>
                     <Form.Label>Suggested Price</Form.Label>
                     <Form.Control 
-                        type='text' 
-                        value={quoteData.price || ''} 
+                        type='number' 
+                        value={fillData.price || ''} 
                         readOnly
                     />
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='amountDue'>
                     <Form.Label>Total Amount Due</Form.Label>
                     <Form.Control 
-                        type='text' 
-                        value={quoteData.due || ''} 
+                        type='number' 
+                        value={putData.due || ''} 
                         readOnly
                     />
                 </Form.Group>
