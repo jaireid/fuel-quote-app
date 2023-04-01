@@ -44,6 +44,19 @@ app.get('/login', (req, res) => {
         });
     });
 
+app.get('/register', (req, res) => {
+    const {username, password} = req.query;
+    const query = `INSERT INTO sql9598279.customer_accounts(customer_username, customer_password) VALUES('${username}', '${password}')`;
+
+    db.query(query, (error, result) => {
+        if(error) throw error;
+        if(results.length >= 1){
+            res.send('Registration Successful');
+        }else {
+            res.send('Invalid account information');
+        }
+        });
+    });
 
 // Routes
 app.get('/', (req, res) => {

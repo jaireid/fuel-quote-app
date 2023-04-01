@@ -9,7 +9,7 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         const form = event.currentTarget;
 
         if(form.checkValidity() === false) {
@@ -23,6 +23,7 @@ export default function Register() {
         console.log(`Username: ${username}`);
         console.log(`Password: ${password}`);
         console.log(`Confirm Password: ${confirmPassword}`);
+		const response = await axios.get(`/register?username=${username}&password=${password}`);
     };
 
     return (
