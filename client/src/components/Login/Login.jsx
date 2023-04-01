@@ -71,6 +71,7 @@ const Login = () => {
           onClick={() => {
             navigate('/register');
           }}
+          
         >
           Register
         </Button>

@@ -1,34 +1,69 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { DatePicker } from 'reactstrap-date-picker'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 export default function Quote() {
-    const [gallons, setGallons] = useState('');
-    const [date, setDate] = useState(new Date().toISOString());
-    const [fmtValue, setFmtValue]= useState(undefined);
+    const [fillData, setFillData] = useState({});
+    const [putData, putQuoteData] = useState({});
+    const [deliveryDate, setDeliveryDate] = useState(null);
+    const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
 
+    useEffect(() => {
+        fetch('http://localhost:3001/quotes/fill')
+            .then(
+                response => response.json()
+            )
+            .then(
+                data => {
+                    setFillData(data);
+            })
+    }, []);
+
     const handleSubmit = (event) => {
+        // Prevents refresh on valid submit
+        event.preventDefault();
+
         const form = event.currentTarget;
 
         if(form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+            setValidated(true);
+            return;
         }
 
         setValidated(true);
+
+        fetch('http://localhost:3001/quotes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(putData)
+          })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.error(error));
     };
 
-    const handleChange = (dT, fD) => {
-        setDate(dT);
-        setFmtValue(fD);
-    };
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        // putQuoteData({ ...putData, [name]: value });
+        if (name === "gallons") {
+            const suggestedPrice = fillData.price || 0;
+            const gallons = parseFloat(value) || 0;
+            const due = (gallons * suggestedPrice).toFixed(2);
+            putQuoteData({ ...putData, gallons, due });
+        } 
+    }
 
-    const collectData = () => {
-        console.warn(gallons);
-        console.warn(date);
+    const handleDateChange = (date) => {
+        setDeliveryDate(date);
+        setErrors((prev) => ({ ...prev, deliveryDate: null }));
+        putQuoteData({ ...putData, deliveryDate: date.toISOString().split('T')[0] });
     }
 
     return (
@@ -41,9 +76,9 @@ export default function Quote() {
                     <InputGroup hasValidation>
                         <Form.Control 
                             type='number' 
+                            name='gallons'
                             placeholder='Number of gallons' 
-                            value={gallons} 
-                            onChange={(event) => setGallons(event.target.value)} 
+                            onChange={handleChange} 
                             required
                         />
                         <Form.Control.Feedback type='invalid'>
@@ -55,45 +90,45 @@ export default function Quote() {
                     <Form.Label>Delivery Address</Form.Label>
                     <Form.Control 
                         type='text' 
-                        placeholder='123 Main Street' 
+                        value={fillData.address || ''}
                         readOnly
                     />
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='deliveryDate'>
                     <Form.Label>Delivery Date</Form.Label>
                         <InputGroup hasValidation>
-                            <DatePicker
-                                type='date'
-                                minDate={new Date().toString()}
-                                value={date} 
-                                onChange={(d,f) => handleChange(d, f)}
+                            <DatePicker 
+                                selected={deliveryDate} 
+                                onChange={handleDateChange} 
+                                minDate={new Date()} 
+                                dateFormat="yyyy-MM-dd" 
+                                className={`form-control ${errors.deliveryDate ? "is-invalid" : ""}`}
                                 required
                             />
                             <Form.Control.Feedback type='invalid'>
-                                Please select a Delivery Date.
+                                {errors.deliveryDate}
                             </Form.Control.Feedback>
                         </InputGroup>
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='suggestedPrice'>
                     <Form.Label>Suggested Price</Form.Label>
                     <Form.Control 
-                        type='text' 
-                        placeholder='4.50' 
+                        type='number' 
+                        value={fillData.price || ''} 
                         readOnly
                     />
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='amountDue'>
                     <Form.Label>Total Amount Due</Form.Label>
                     <Form.Control 
-                        type='text' 
-                        placeholder='90' 
+                        type='number' 
+                        value={putData.due || ''} 
                         readOnly
                     />
                 </Form.Group>
                 <Button 
                     type='submit' 
                     variant='outline-dark'
-                    onClick={collectData}
                 >
                     Request Quote
                 </Button>

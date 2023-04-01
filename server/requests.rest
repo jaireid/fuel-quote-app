@@ -1,0 +1,8 @@
+GET http://localhost:3001/quotes
+
+###
+GET http://localhost:3001/quotes/fill
+
+###
+POST http://localhost:3001/quotes
+Content-Type: application/json
