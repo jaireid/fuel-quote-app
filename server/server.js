@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
+const app = express();
 
 const db = mysql.createConnection
     ({
@@ -20,8 +21,22 @@ db.connect((err) => {
     });
 });
 
-const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.get('/login', (req, res) => {
+    const {username, password} = req.query;
+    const query = `SELECT * FROM sql9598279.customer_accounts WHERE customer_username ='${username}' AND customer_password='${password}'`;
+
+    db.query(query, (error, result) => {
+        if(error) throw error;
+        if(results.length >= 1){
+            res.send('Login successful');
+        }else {
+            res.send('Invalid username or password');
+        }
+        });
+    });
+
 
 app.listen(3001, () => console.log('Server started on port 3001'));

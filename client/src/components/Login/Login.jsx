@@ -3,21 +3,17 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-export default function Login() {
+const Login = () => {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-
-    if(form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.get(`/login?username=${username}&password=${password}`);
+    console.log(response.data);
   };
 
   let navigate = useNavigate();
@@ -85,3 +81,5 @@ export default function Login() {
     </>
   );
 };
+
+export default Login;
