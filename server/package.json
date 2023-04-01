@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "jest --watch --verbose"
+    "test": "jest --watch --verbose",
+    "coverage": "jest --coverage"
   },
   "jest": {
     "testEnvironment": "node",
@@ -19,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "mysql": "^2.18.1",
     "mysql2": "^3.2.0"
   },
   "devDependencies": {

@@ -38,11 +38,29 @@ describe('POST /quotes', () => {
     };
 
     const response = await supertest(app)
-      .post('/quotes')
-      .send(newQuote)
-
+    .post('/quotes')
+    .send(newQuote)
+    
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('id');
     expect(response.body).toHaveProperty('address', '101 Main Street');
   });
 });
+
+
+describe('GET /login', () => {
+  test('should return "Login successful" if valid credentials are provided', async () => {
+    const response = await supertest(app).get('/login?username=user1234&password=password1234');
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe('Login successful');
+  });
+
+  test('should return "Invalid username or password" if invalid credentials are provided', async () => {
+    const response = await supertest(app).get('/login?username=user1234&password=wrong');
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe('Invalid username or password');
+  });
+});
+

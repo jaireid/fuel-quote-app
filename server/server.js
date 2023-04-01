@@ -17,11 +17,12 @@ const db = mysql.createConnection
 
 db.connect((err) => {
     if (err) throw err;
-    console.log('Connected to MySQL Server!');
+    //else{console.log('Connected to MySQL Server!');}
+
     db.query("SELECT customer_state FROM sql9598279.customer_accounts;", function (err, result, fields)
     {
         if (err) throw err;
-        console.log(result);
+        //else{console.log(result);}
     });
 });
 
@@ -30,11 +31,12 @@ app.use(cors());
 
 app.get('/login', (req, res) => {
     const {username, password} = req.query;
+
     const query = `SELECT * FROM sql9598279.customer_accounts WHERE customer_username ='${username}' AND customer_password='${password}'`;
 
     db.query(query, (error, result) => {
         if(error) throw error;
-        if(results.length >= 1){
+        if(result.length === 1){
             res.send('Login successful');
         }else {
             res.send('Invalid username or password');
