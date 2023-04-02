@@ -58,6 +58,21 @@ app.get('/register', (req, res) => {
         });
     });
 
+
+app.get('/profile', (req, res) => {
+    const {name, address1, address2, city, region, zipcode} = req.query;
+    const query = `INSERT INTO sql9598279.customer_accounts(customer_name, customer_address1, customer_address2, customer_city, customer_state, customer_zipcode) VALUES('${name}', '${address1}', '${address2}', '${city}', '${region}', '${zipcode}')`;
+
+    db.query(query, (error, result) => {
+        if(error) throw error;
+        if(results.length >= 1){
+            res.send('Profile updated');
+        }else {
+            res.send('Invalid profile information');
+        }
+        });
+    });
+    
 // Routes
 app.get('/', (req, res) => {
     res.send('Testing');

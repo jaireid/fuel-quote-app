@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import axios from 'axios';
   
 export default function Profile() {
     const [validated, setValidated] = useState(false);
@@ -12,7 +13,7 @@ export default function Profile() {
     const [region, setRegion] = useState('')
     const [zipcode, setZipcode] = useState('')
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         const form = event.currentTarget;
 
         if(form.checkValidity() === false) {
@@ -24,6 +25,8 @@ export default function Profile() {
 
         // enter name, address1, address2, city, state, zipcode into database (just logging for now)
         console.log(`Name: ${name} Address 1: ${address1} Address 2: ${address2} City: ${city} State: ${region} Zip Code: ${zipcode}`)
+        const response = await axios.post('/profile', {name: name, address1: address1, address2: address2, city: city, region: region, zipcode: zipcode});
+        console.log(response)
     };
 
 

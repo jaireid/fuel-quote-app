@@ -10,6 +10,7 @@ export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+	let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         const form = event.currentTarget;
@@ -25,8 +26,11 @@ export default function Register() {
         console.log(`Username: ${username}`);
         console.log(`Password: ${password}`);
         console.log(`Confirm Password: ${confirmPassword}`);
-		const response = await axios.get(`/register?username=${username}&password=${password}`);
-		Navigate('/login')
+		const response = await axios.post('/register', {username: username, password: password});
+		console.log(response)
+		useEffect(() => {
+			navigate('/login')
+		});
     };
 
     return (
