@@ -2,12 +2,9 @@ import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
-
 
 export default function Login() {
+  const [fillData, setFillData] = useState({});
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

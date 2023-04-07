@@ -1,8 +1,33 @@
-GET http://localhost:3001/quotes
+GET http://localhost:3059/quotes
 
 ###
-GET http://localhost:3001/quotes/fill
+GET http://localhost:3059/quotes/fill
 
 ###
-POST http://localhost:3001/quotes
+POST http://localhost:3059/quotes
 Content-Type: application/json
+
+###
+GET http://localhost:3059/login
+
+###
+POST http://localhost:3059/login
+Content-Type: application/json
+
+{
+    "username": "kyle",
+    "password": "123d45g67y8"
+}
+
+###
+GET http://localhost:3059/register
+
+###
+POST http://localhost:3059/register
+Content-Type: application/json
+
+{
+    "username": "kyle",
+    "password": "123d45g67y8",
+    "confirmPassword": "123d45g67y8"
+}

@@ -14,7 +14,7 @@ export default function Quote() {
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:3001/quotes/fill')
+        fetch('http://localhost:3059/quotes/fill')
             .then(
                 response => response.json()
             )
@@ -39,7 +39,7 @@ export default function Quote() {
 
         setValidated(true);
 
-        fetch('http://localhost:3001/quotes', {
+        fetch('http://localhost:3059/quotes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(putData)
