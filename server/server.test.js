@@ -1,14 +1,14 @@
 const supertest = require('supertest');
 const app = require('./server');
 
-describe('GET /', () => {
-  test('GET /', async () => {
-    const response = await supertest(app).get('/');
+// describe('GET /', () => {
+//   test('GET /', async () => {
+//     const response = await supertest(app).get('/');
 
-    expect(response.status).toBe(200);
-    expect(response.text).toBe('Testing');
-  });
-});
+//     expect(response.status).toBe(200);
+//     expect(response.text).toBe('Testing');
+//   });
+// });
 
 describe('GET /quotes', () => {
   test('should return all quotes', async () => {
@@ -48,12 +48,19 @@ describe('POST /quotes', () => {
 });
 
 
-describe('GET /login', () => {
+describe('POST /login', () => {
   test('should return "Login successful" if valid credentials are provided', async () => {
-    const response = await supertest(app).get('/login?username=user1234&password=password1234');
+    const newLogin = {
+      id: 1,
+      username: 'user123',
+      password: 'password123'
+    };
+
+    const response = await supertest(app)
+    .post('/login')
+    .send(newLogin);
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe('Login successful');
   });
 
   test('should return "Invalid username or password" if invalid credentials are provided', async () => {

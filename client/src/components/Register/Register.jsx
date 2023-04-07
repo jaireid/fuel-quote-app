@@ -2,36 +2,61 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import axios from 'axios'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
     const [validated, setValidated] = useState(false);
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-	let navigate = useNavigate();
+	const [putData, putQuoteData] = useState({});
+    let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
+        event.preventDefault();
         const form = event.currentTarget;
 
         if(form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-    	}
+            setValidated(true);
+            return;
+        }
 
         setValidated(true);
 
-        // Log user input
-        console.log(`Username: ${username}`);
-        console.log(`Password: ${password}`);
-        console.log(`Confirm Password: ${confirmPassword}`);
-		const response = await axios.post('/register', {username: username, password: password});
-		console.log(response)
-		useEffect(() => {
-			navigate('/login')
-		});
+        fetch('http://localhost:3059/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(putData)
+          })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.error(error));
+
     };
+
+    const handleUsernameChange = (event) => {
+		const { name, value } = event.target;
+		if(name === "username") {
+			const username = value;
+			putQuoteData({ ...putData, username });
+		}
+    }
+
+	const handleUsernamePassword = (event) => {
+		const { name, value } = event.target;
+		if(name == "password") {
+			const password = value;
+			putQuoteData({ ...putData, password });
+		}
+    }
+
+	const handleUsernameConfirmPassword = (event) => {
+		const { name, value } = event.target;
+		if(name == "confirmPassword") {
+			const confirmPassword = value;
+			putQuoteData({ ...putData, confirmPassword });
+		}
+    }
 
     return (
         <>
@@ -43,10 +68,10 @@ export default function Register() {
 					<InputGroup hasValidation>
 						<Form.Control
 							type='text' 
+							name='username'
 							placeholder='Username' 
 							required
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+							onChange={handleUsernameChange}
 						/>
 						<Form.Control.Feedback type='invalid'>
 							Please choose a username.
@@ -58,10 +83,10 @@ export default function Register() {
 					<InputGroup hasValidation>
 						<Form.Control
 							type='password' 
+							name='password'
 							placeholder='Password' 
 							required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+							onChange={handleUsernamePassword}
 						/>
 						<Form.Control.Feedback type='invalid'>
 							Please choose a password.
@@ -73,10 +98,10 @@ export default function Register() {
 					<InputGroup hasValidation>
 						<Form.Control
 							type='password' 
+							name='confirmPassword'
 							placeholder='Confirm Password' 
 							required
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+							onChange={handleUsernameConfirmPassword}
 						/>
 						<Form.Control.Feedback type='invalid'>
 							Please confirm password.
