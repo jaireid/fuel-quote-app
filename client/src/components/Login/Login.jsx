@@ -4,23 +4,24 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [fillData, setFillData] = useState("");
 
   useEffect(() => {
     fetch('http://localhost:3059/login/fill')
-    .then(
-      response => {
-            setFillData(data);
-      }
-    )
-  },
-  []);
+      .then(response => response.json())
+      .then(data => {
+        setFillData(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -33,6 +34,7 @@ export default function Login() {
     }
 
     setValidated(true);
+    const putData = { username, password };
 
     fetch('http://localhost:3059/login',{
       method: 'POST',
@@ -43,7 +45,6 @@ export default function Login() {
       .then(result => console.log(result))
       .catch(error => console.error(error));
   };
-
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
