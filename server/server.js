@@ -17,7 +17,7 @@ const db = mysql.createConnection
 
 db.connect((err) => {
     if (err) throw err;
-    //else{console.log('Connected to MySQL Server!');}
+    else{console.log('Connected to MySQL Server!');}
 
     db.query("SELECT customer_state FROM sql9598279.customer_accounts;", function (err, result, fields)
     {
@@ -30,6 +30,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/login', (req, res) => {
+    console.log('login attempted');
     const {username, password} = req.query;
 
     const query = `SELECT * FROM sql9598279.customer_accounts WHERE customer_username ='${username}' AND customer_password='${password}'`;
@@ -37,8 +38,10 @@ app.get('/login', (req, res) => {
     db.query(query, (error, result) => {
         if(error) throw error;
         if(result.length === 1){
+            console.log('Login successful');
             res.send('Login successful');
         }else {
+            console.log('Incorrect username or password');
             res.send('Invalid username or password');
         }
         });
@@ -79,6 +82,7 @@ app.get('/', (req, res) => {
 });
   
 app.use('/quotes', quotesController);
+app.use('/login', loginController.js);
 // app.use('/users', usersController);
 
 // Error Handler
