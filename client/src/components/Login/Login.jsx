@@ -1,22 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const Login = () => {
+
+
+export default function Login() {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios.get(`/login?username=${username}&password=${password}`);
-    console.log(response.data);
+  useEffect(() => {
+    fetch('http://localhost:3059/login/fill')
+    .then(
+      response => {
+            setFillData(data);
+      }
+    )
+  },
+  []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if(form.checkValidity() === false){
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+      return;
+    }
+
+    setValidated(true);
+
+    fetch('http://localhost:3059/login',{
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(putData)
+    })
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.error(error));
   };
 
-  let navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -82,5 +109,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;
