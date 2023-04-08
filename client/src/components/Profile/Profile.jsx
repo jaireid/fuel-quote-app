@@ -28,7 +28,7 @@ export default function Profile() {
 
         setValidated(true);
 
-        fetch('http://localhost:3001/profile', {
+        fetch('http://localhost:3059/profile', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(putData)

@@ -1,4 +1,5 @@
 const express = require('express');
+const mysql = require('mysql');
 const router = express.Router();
 
 let registers = [
@@ -8,6 +9,25 @@ let registers = [
         "confirmPassword": "123d45g67y8"
     }
 ];
+
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
+
+db.connect((err) => {
+    if (err) throw err;
+    else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT customer_state FROM sql9598279.customer_accounts;", function (err, result, fields)
+    {
+        if (err) throw err;
+        //else{console.log(result);}
+    });
+});
 
 router.get('/', (req, res) => {
     res.json(registers);
@@ -25,7 +45,10 @@ router.post('/', (req, res) => {
       password: req.body.password,
       confirmPassword: req.body.confirmPassword
     };
-
+    const query = `INSERT INTO credentials(username,password) VALUES('${req.body.username}', '${req.body.password}')`
+    db.query(query,function(err,result,fields){
+        if(err) throw err;
+    })
     registers.push(register);
     res.send(register);
 });
