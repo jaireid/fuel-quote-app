@@ -35,7 +35,7 @@ app.use(cors());
 app.use('/quotes', quotesController);
 app.use('/login', loginController);
 app.use('/register', registerController);
-// app.use('/profile', profileController);
+app.use('/profile', profileController);
 
 // Error Handler
 app.use((err, req, res, next) => {

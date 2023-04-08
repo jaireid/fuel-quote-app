@@ -31,3 +31,16 @@ Content-Type: application/json
     "password": "123d45g67y8",
     "confirmPassword": "123d45g67y8"
 }
+
+###
+POST http://localhost:3059/profile
+Content-Type: application/json
+
+{
+    "name": "kyle",
+    "address1": "101 main street",
+    "address2": null,
+    "city":"houston",
+    "region":"tx",
+    "zipcode":"77002"
+}
