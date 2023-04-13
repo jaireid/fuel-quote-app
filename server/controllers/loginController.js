@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 let logins = [
     {
@@ -7,6 +11,24 @@ let logins = [
         "password": "123d45g67y8"
     }
 ];
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
+
+db.connect((err) => {
+    if (err) throw err;
+    //else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
+    {
+        if (err) throw err;
+    });
+
+});
 
 router.get('/', (req, res) => {
     res.json(login);
@@ -18,14 +40,32 @@ router.post('/', (req, res) => {
         return;
     }
 
-    const login = {
-        id: logins.length = 1,
-        username: req.body.username,
-        password: req.body.password
-    };
+    const username = req.body.username;
+    const password = req.body.password;
 
-    logins.push(login);
-    res.send(login);
+    db.query(`SELECT * FROM sql9598279.credentials WHERE username = '${username}'`, function (err, result, fields) {
+        if (err) throw err;
+
+        if (result.length > 0) {
+            const hashedPassword = result[0].password;
+
+            bcrypt.compare(password, hashedPassword, function(err, match) {
+                if (err) throw err;
+
+                if (match) {
+                    // Login is valid
+                    res.send(result[0]);
+                } else {
+                    // Login is not valid
+                    res.status(401).send('Invalid login credentials');
+                }
+            });
+        } else {
+            // Login is not valid
+            res.status(401).send('Invalid login credentials');
+        }
+    });
 });
+
 
 module.exports = router;
