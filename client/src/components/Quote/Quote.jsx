@@ -55,7 +55,29 @@ export default function Quote() {
         if (name === "gallons") {
             const suggestedPrice = fillData.price || 0;
             const gallons = parseFloat(value) || 0;
-            const due = (gallons * suggestedPrice).toFixed(2);
+            const address = fillData.address || ""; 
+            
+           //start calculation of the final fuel price 
+            const company_profit = .1
+            if (gallons > 1000){
+                bulk_buy = 0.02
+            }
+            else{
+                bulk_buy = 0.03
+            }
+
+            if(/TX/.test(address) || /Texas/.test(address)){
+                location_factor = 0.02
+            }
+            else{
+                lacation_factor = 0.04
+            }
+
+            margin  = suggestedPrice * (bulk_buy + company_profit + location_factor)
+            customer_ppg = suggestedPrice + margin
+            // finish price calculation module 
+
+            const due = (gallons * (customer_ppg)).toFixed(2);
             putQuoteData({ ...putData, gallons, due });
         } 
     }
