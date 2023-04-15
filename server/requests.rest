@@ -7,6 +7,14 @@ GET http://localhost:3059/quotes/fill
 POST http://localhost:3059/quotes
 Content-Type: application/json
 
+{
+    "gallons": 2,
+    "deliveryDate": "2015-03-25",
+    "address": "101 Main Street",
+    "price": 4,
+    "due": 8
+}
+
 ###
 GET http://localhost:3059/login
 
@@ -38,9 +46,9 @@ Content-Type: application/json
 
 {
     "name": "kyle",
-    "address1": "101 main street",
-    "address2": null,
     "city":"houston",
     "region":"tx",
-    "zipcode":"77002"
+    "zipcode":"77002",
+    "address1": "101 main street",
+    "address2": "101 main street"
 }

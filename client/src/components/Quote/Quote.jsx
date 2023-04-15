@@ -70,7 +70,7 @@ export default function Quote() {
                 location_factor = 0.02
             }
             else{
-                lacation_factor = 0.04
+                location_factor = 0.04
             }
 
             margin  = suggestedPrice * (bulk_buy + company_profit + location_factor)
@@ -78,7 +78,7 @@ export default function Quote() {
             // finish price calculation module 
 
             const due = (gallons * (customer_ppg)).toFixed(2);
-            putQuoteData({ ...putData, gallons, due });
+            putQuoteData({ ...putData, gallons, due, address, customer_ppg});
         } 
     }
 

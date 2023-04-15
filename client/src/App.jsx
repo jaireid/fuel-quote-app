@@ -19,7 +19,7 @@ function App() {
             <Route path='/' element={<h1>Home Page</h1>} />
             <Route path='/quote' element={<Quote />} />
             <Route path='/history' element={<History />} />
-            <Route path='/profile' element={<Profile />}/>
+            <Route path='/profile' element={<Profile />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
           </Routes>

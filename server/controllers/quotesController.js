@@ -1,15 +1,35 @@
 const express = require('express');
+const mysql = require('mysql');
 const router = express.Router();
 
 let fill = {
     address: '101 Main Street',
-    price: 2
+    // price: 2
 };
 
 let quotes = [
-    { id: 1, gallons: 5, deliveryDate: null, address: '101 Main Street', price: 3, due: 15 },
-    { id: 2, gallons: 10, deliveryDate: null, address: '101 Main Street', price: 2, due: 20 },
+    { id: 1, gallons: 5, deliveryDate: "2015-03-25", address: '101 Main Street', price: 3, due: 15 },
+    { id: 2, gallons: 10, deliveryDate: "2015-03-25", address: '101 Main Street', price: 2, due: 20 },
 ];
+
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
+
+db.connect((err) => {
+    if (err) throw err;
+    else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT customer_state FROM sql9598279.customer_accounts;", function (err, result, fields)
+    {
+        if (err) throw err;
+        //else{console.log(result);}
+    });
+});
 
 // Get all quotes from database
 router.get('/', (req, res) => {
@@ -32,20 +52,29 @@ router.post('/', (req, res) => {
         return;
     }
 
-    // const gallons = Number(req.body.gallons);
-    const price = fill.price;
+    const gallons = Number(req.body.gallons);
+    const date = req.body.deliveryDate;
+    const price = Number(req.body.price);
+    const due = Number(req.body.due);
+    const address = req.body.address;
 
-    const quote = {
-      id: quotes.length + 1,
-      gallons: Number(req.body.gallons),
-      deliveryDate: new Date(req.body.deliveryDate),
-      address: '101 Main Street',
-      price: price,
-      due: Number(req.body.due),
-    };
+    const query = `INSERT INTO sql9598279.quotes(gallons, deliveryDate, address, price, due) VALUES('${gallons}', '${date}', '${address}', '${price}', ${due})`;
 
-    quotes.push(quote);
-    res.send(quote);
+    db.query(query, function(err, result, fields) {
+        if (err) throw err;
+
+        const quote = {
+            id: result.insertId,
+            gallons: gallons,
+            deliveryDate: date,
+            address: address,
+            price: price,
+            due: due,
+        };
+
+        quotes.push(quote);
+        res.send(quote);
+    });
 });
 
 module.exports = router;
