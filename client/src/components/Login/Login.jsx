@@ -50,10 +50,7 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-  const handleSave = () => {
-    // Write the data to a file or send it to an API for storage
-    console.log(`Username: ${username}, Password: ${password}`);
-  };
+
 
   return (
     <>
@@ -90,19 +87,7 @@ export default function Login() {
           </InputGroup>
         </Form.Group>
         <Button type='submit' variant='outline-dark'>Login</Button>{' '}
-        <Button 
-          variant='dark'
-          onClick={() => {
-            navigate('/register');
-          }}
-          
-        >
-          Register
-        </Button>
       </Form>
-      <Button variant='success' onClick={handleSave}>
-        Save
-      </Button>
     </>
   );
 };

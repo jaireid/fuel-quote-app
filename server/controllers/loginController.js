@@ -55,6 +55,7 @@ router.post('/', (req, res) => {
                     console.log("Login is valid");
                     console.log(result[0].username);
                     res.send("Login successful");
+                    
                 } else {
                     // Login is not valid
                     //console.log("Password is wrong");
