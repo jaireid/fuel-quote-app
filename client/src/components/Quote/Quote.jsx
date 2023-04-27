@@ -12,6 +12,7 @@ export default function Quote() {
     const [deliveryDate, setDeliveryDate] = useState(null);
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
+    const [customerInfo, setCustomerInfo] = useState({});
 
     useEffect(() => {
         fetch('http://localhost:3059/quotes/fill')
@@ -21,6 +22,8 @@ export default function Quote() {
             .then(
                 data => {
                     setFillData(data);
+                    setCustomerOrders(data);
+
             })
     }, []);
 
@@ -51,6 +54,8 @@ export default function Quote() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        setCustomerInfo({ ...customerInfo, [name]: value });
+
         // putQuoteData({ ...putData, [name]: value });
         if (name === "gallons") {
             const suggestedPrice = fillData.price || 0;
@@ -72,8 +77,14 @@ export default function Quote() {
             else{
                 location_factor = 0.04
             }
+            if ( isReturningCustomer = customerOrders.length > 0){
+                return_discount = -0.01
+            }
+            else{
+                return_discount = 0
+            }
 
-            margin  = suggestedPrice * (bulk_buy + company_profit + location_factor)
+            margin  = suggestedPrice * (bulk_buy + company_profit + location_factor + return_discount)
             customer_ppg = suggestedPrice + margin
             // finish price calculation module 
 
