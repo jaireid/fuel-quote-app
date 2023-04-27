@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
         res.status(400).send('Missing required fields');
         return;
     }
-
+    
     const name = req.body.name;
     const address1 = req.body.address1;
     const address2 = req.body.address2;
@@ -40,6 +40,26 @@ router.post('/', (req, res) => {
     const region = req.body.region;
     const zipcode = Number(req.body.zipcode);
 
+    if (name.length > 50)
+    {
+        res.status(400).send('Name cannot exceed 50 characters');
+        return;
+    }
+    if (address1.length > 100)
+    {
+        res.status(400).send('Address 1 cannot exceed 100 characters');
+        return;
+    }
+    if (city.length > 100)
+    {
+        res.status(400).send('City cannot exceed 100 characters');
+        return;
+    }
+    if (zipcode.toString().length < 5 || zipcode.toString().length > 9)
+    {
+        res.status(400).send('Zipcode must be between 5 and 9 digits');
+        return;
+    }
     const query = `INSERT INTO sql9598279.customer_accounts(customer_name, customer_city, customer_state, customer_zipcode, customer_address1, customer_address2) VALUES('${name}', '${city}', '${region}', '${zipcode}', '${address1}', '${address2}')`;
 
     db.query(query, function(err, result, fields) {
