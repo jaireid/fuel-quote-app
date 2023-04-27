@@ -57,12 +57,12 @@ router.post('/', (req, res) => {
                     res.send("Login successful");
                 } else {
                     // Login is not valid
-                    console.log("Password is wrong");
+                    //console.log("Password is wrong");
                     res.status(401).send('Invalid login credentials');
                 }
         } else {
             // Login is not valid
-            console.log("username is wrong");
+            //console.log("username is wrong");
             res.status(401).send('Invalid login credentials');
         }
     });
