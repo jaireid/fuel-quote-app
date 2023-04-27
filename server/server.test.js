@@ -52,8 +52,8 @@ describe('POST /login', () => {
   test('should return "Login successful" if valid credentials are provided', async () => {
     const newLogin = {
       id: 1,
-      username: 'dylantest',
-      password: '$2b$10$hmJJx1plF9NmgNuXLqksn.y4VpX0iT3/X/sgNz'
+      username: 'test123test123',
+      password: 'password123password123'
     };
 
     const response = await supertest(app)
@@ -72,7 +72,7 @@ describe('POST /login', () => {
     const response = await supertest(app)
     .post('/login')
     .send(newLogin);
-    
+
     expect(response.status).toBe(401);
     expect(response.text).toBe('Invalid login credentials');
   });

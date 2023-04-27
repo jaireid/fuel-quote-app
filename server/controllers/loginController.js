@@ -48,19 +48,21 @@ router.post('/', (req, res) => {
 
         if (result.length > 0) {
             const hashedPassword = result[0].password;
-            console.log(hashedPassword);
-            console.log(password);
-                if (password == hashedPassword) {
+            bcrypt.compare(password, hashedPassword, function (err, bcryptResult) {
+                if (err) throw err;
+                console.log(bcryptResult);
+                if (bcryptResult) {
                     // Login is valid
                     console.log("Login is valid");
                     console.log(result[0].username);
                     res.send("Login successful");
-                    
+
                 } else {
                     // Login is not valid
                     //console.log("Password is wrong");
                     res.status(401).send('Invalid login credentials');
                 }
+            });
         } else {
             // Login is not valid
             //console.log("username is wrong");
