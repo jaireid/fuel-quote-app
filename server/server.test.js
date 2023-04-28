@@ -80,17 +80,17 @@ describe('POST /login', () => {
 
 
 describe('POST /register', () => {
-  // it('should create a new user and return a 200 status if all fields are provided and passwords match', async () => {
-  //   const response = await supertest(app).post('/register').send({
-  //     username: 'testuser',
-  //     password: 'password123',
-  //     confirmPassword: 'password123',
-  //   });
-  //   expect(response.status).toBe(200);
-  //   expect(response.body).toHaveProperty('id');
-  //   expect(response.body).toHaveProperty('username', 'testuser');
-  //   expect(response.body).toHaveProperty('password');
-  // });
+  it('should create a new user and return a 200 status if all fields are provided and passwords match', async () => {
+    const response = await supertest(app).post('/register').send({
+      username: 'testuser',
+      password: 'password123',
+      confirmPassword: 'password123',
+    });
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty('username', 'testuser');
+    expect(response.body).toHaveProperty('password');
+  });
 
   it('should return a 400 status if the username is already taken', async () => {
     const response = await supertest(app).post('/register').send({
