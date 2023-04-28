@@ -3,7 +3,7 @@ const express = require('express');
 const mysql = require('mysql');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+
 
 const db = mysql.createConnection
     ({
@@ -24,6 +24,8 @@ db.connect((err) => {
 
 });
 
+const saltRounds = 10;
+
 router.post('/', (req, res) => {
     if (!req.body.username || !req.body.password || !req.body.confirmPassword) {
         res.status(400).send('Missing required fields');
@@ -39,27 +41,27 @@ router.post('/', (req, res) => {
         return;
     }
 
-    bcrypt.hash(password, saltRounds, function(err, hash) {
-        if (err) throw err;
-        db.query(`SELECT username FROM sql9598279.credentials WHERE username='${username}';`, function (err, result, fields)
-            {
-            if (err) throw err;
-            //else{console.log(result);}
-            if(result.length>0)
-            {
-                res.status(400).send("Username already taken");
-                return;
+    db.query(`SELECT username FROM sql9598279.credentials WHERE username='${username}';`, function (err, result, fields)
+    {
+        // check if username exists
+        if (result.length > 0) {
+            res.status(400).send('Username already taken');
+            return;
+        }
+
+        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+            if(err) {
+                res.status(400).send('Hash error');
             }
-        });
-        const query = `INSERT INTO credentials(username,password) VALUES('${username}', '${hash}')`;
-        db.query(query, function(err, result, fields) {
-            if (err) throw err;
-            
-            res.redirect('/login');
-            res.status(200);
-        });
+    
+            const query = `INSERT INTO credentials(username,password) VALUES('${username}', '${hashedPassword}')`;
+            db.query(query, function(err, result, fields) {
+                if (err) throw err;
+                
+                res.redirect('/login');
+            });
+        })
     });
 });
-
 
 module.exports = router;

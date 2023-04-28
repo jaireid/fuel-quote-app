@@ -23,8 +23,8 @@ POST http://localhost:3059/login
 Content-Type: application/json
 
 {
-    "username": "user4",
-    "password": "user4"
+    "username": "werty",
+    "password": "werty"
 }
 
 ###
@@ -35,7 +35,7 @@ POST http://localhost:3059/register
 Content-Type: application/json
 
 {
-    "username": "kyle",
+    "username": "esxrdc",
     "password": "123d45g67y8",
     "confirmPassword": "123d45g67y8"
 }

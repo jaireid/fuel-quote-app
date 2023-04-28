@@ -33,6 +33,7 @@ export default function Login() {
 
     fetch('http://localhost:3059/login',{
       method: 'POST',
+      credentials: 'include',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(putData)
     })

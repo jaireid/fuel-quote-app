@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const db = require('./config/db');
+// const db = require('./config/db');
 const cors = require('cors');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
@@ -18,6 +18,25 @@ const registerController = require('./controllers/registerController');
 const app = express();
 const port = process.env.PORT;
 
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
+
+db.connect((err) => {
+    if (err) throw err;
+    //else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
+    {
+        if (err) throw err;
+    });
+
+});
+
 const sessionStore = new MySQLStore({
     expiration: 86400000,
     createDatabaseTable: true,
@@ -33,7 +52,13 @@ const sessionStore = new MySQLStore({
 
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
+var corsOptions = {
+    origin: "http://localhost:5173",
+    credentials: true
+  };
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+// app.use(cors());
 
 // app.use(cookieParser("cookie-parser-secret"));
 
@@ -58,6 +83,14 @@ sessionStore.onReady().then(() => {
 	// Something went wrong.
 	console.error(error);
 });
+
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// });
 
 // app.use(helmet())
 

@@ -24,10 +24,6 @@ db.connect((err) => {
 
 });
 
-// router.get('/', (req, res) => {
-//     res.render('/');
-// });
-
 router.post('/', (req, res) => {
     if (!req.body.username || !req.body.password) {
         res.status(400).send('Missing required fields');
@@ -42,17 +38,23 @@ router.post('/', (req, res) => {
 
         if (result.length > 0) {
             const hashedPassword = result[0].password;
+            // const user = result[0];
+
             bcrypt.compare(password, hashedPassword, function (err, bcryptResult) {
                 if (err) throw err;
-                console.log("failing hash")
-                console.log(bcryptResult);
+                // console.log("failing hash");
+                // console.log(bcryptResult);
                 if (bcryptResult) {
                     // Login is valid
                     console.log("Login is valid");
                     console.log(result[0].username);
-                    req.session.userID = user.id;
-                    res.send("Login successful");
-                    // res.redirect('/quote');
+                    req.session.userId = result[0].username;
+                    if(!req.session.userId){
+                        req.session.userId = result[0].username;
+                        res.redirect('/quote');
+                    } else {
+                        res.redirect('/quote');
+                    }
                 } else {
                     // Login is not valid
                     //console.log("Password is wrong");

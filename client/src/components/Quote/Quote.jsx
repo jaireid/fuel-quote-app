@@ -44,6 +44,7 @@ export default function Quote() {
 
         fetch('http://localhost:3059/quotes', {
             method: 'POST',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(putData)
           })

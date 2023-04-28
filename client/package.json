@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "jest"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:3059",
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "axios": "^1.3.4",
