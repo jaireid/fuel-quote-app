@@ -5,6 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const helmet = require('helmet');
+const cookieParser = require("cookie-parser");
 const csurf = require("tiny-csrf");
 const rateLimit = require('express-rate-limit');
 const mysql = require('mysql');
@@ -19,7 +20,7 @@ const port = process.env.PORT;
 
 const sessionStore = new MySQLStore({
     expiration: 86400000,
-    createDatabaseTable: false,
+    createDatabaseTable: true,
     schema: {
         tableName: 'sessions',
         columnNames: {
@@ -30,9 +31,11 @@ const sessionStore = new MySQLStore({
     }
 }, db);
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+
+// app.use(cookieParser("cookie-parser-secret"));
 
 app.use(session({
     key: 'session_cookie_name',
@@ -56,19 +59,19 @@ sessionStore.onReady().then(() => {
 	console.error(error);
 });
 
-app.use(helmet());
+// app.use(helmet())
 
-app.use(
-    csurf(
-        "123456789iamasecret987654321look",
-        ["GET", "POST"]
-    )
-);
+// app.use(
+//     csurf(
+//         "123456789iamasecret987654321look",
+//         ["GET", "POST"]
+//     )
+// );
 
-app.use(rateLimit({
-    windowMs: 60 * 1000,
-    max: 10, // limit each IP to 10 requests per minute
-}));  
+// app.use(rateLimit({
+//     windowMs: 60 * 1000,
+//     max: 10, // limit each IP to 10 requests per minute
+// }));  
 
 app.use('/protected', protectedController);
 app.use('/quotes', quotesController);

@@ -1,17 +1,26 @@
 const express = require('express');
-const db = require('../config/db');
+// const db = require('../config/db');
 const mysql = require('mysql');
 const router = express.Router();
 
-let fill = {
-    address: '101 Main Street',
-    // price: 2
-};
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
 
-let quotes = [
-    { id: 1, gallons: 5, deliveryDate: "2015-03-25", address: '101 Main Street', price: 3, due: 15 },
-    { id: 2, gallons: 10, deliveryDate: "2015-03-25", address: '101 Main Street', price: 2, due: 20 },
-];
+db.connect((err) => {
+    if (err) throw err;
+    //else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
+    {
+        if (err) throw err;
+    });
+
+});
 
 function requireAuth(req, res, next) {
     if(req.session.userID) {
@@ -21,18 +30,17 @@ function requireAuth(req, res, next) {
     }
 }
 
-// Get all quotes from database
-router.get('/', requireAuth, (req, res) => {
-    res.json(quotes);
-});
-
 // Get user data to fill quote
 router.get('/fill', requireAuth, (req, res) => {
-    const data = fill;
+    if (!req) return res.status(404).send('Fill info not found');
 
-    if (!data) return res.status(404).send('Fill info not found');
+    const query = `SELECT * FROM sql9598279.quotes`
 
-    res.json(data);
+    db.query(query, function(err, result, fields) {
+        if (err) throw err;
+
+        res.send(result);
+    });
 });
   
 // Create a new quote and send to database
@@ -53,17 +61,8 @@ router.post('/', requireAuth, (req, res) => {
     db.query(query, function(err, result, fields) {
         if (err) throw err;
 
-        const quote = {
-            id: result.insertId,
-            gallons: gallons,
-            deliveryDate: date,
-            address: address,
-            price: price,
-            due: due,
-        };
-
-        quotes.push(quote);
-        res.send(quote);
+        res.send(result);
+        res.status(200);
     });
 });
 

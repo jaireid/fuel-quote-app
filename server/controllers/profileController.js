@@ -1,12 +1,31 @@
 const express = require('express');
-const db = require('../config/db');
+// const db = require('../config/db');
 const mysql = require('mysql');
 const router = express.Router();
 
-let profiles = [
-    { name: "mark", city: 'houston', region: "tx", zipcode: 77777, address1: "101 main street", address2: '101 Main Street' },
-    { name: "john", city: 'houston', region: "tx", zipcode: 77777, address1: "101 main street", address2: '101 Main Street' },
-];
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
+
+db.connect((err) => {
+    if (err) throw err;
+    //else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
+    {
+        if (err) throw err;
+    });
+
+});
+
+// let profiles = [
+//     { name: "mark", city: 'houston', region: "tx", zipcode: 77777, address1: "101 main street", address2: '101 Main Street' },
+//     { name: "john", city: 'houston', region: "tx", zipcode: 77777, address1: "101 main street", address2: '101 Main Street' },
+// ];
 
 function requireAuth(req, res, next) {
     if(req.session.userID) {
@@ -55,17 +74,17 @@ router.post('/', requireAuth, (req, res) => {
     db.query(query, function(err, result, fields) {
         if (err) throw err;
 
-        const profile = {
-            id: result.insertId,
-            name: name,
-            city: city,
-            region: region,
-            zipcode: zipcode,
-            address1: address1,
-            address2: address2
-        };
+        // const profile = {
+        //     id: result.insertId,
+        //     name: name,
+        //     city: city,
+        //     region: region,
+        //     zipcode: zipcode,
+        //     address1: address1,
+        //     address2: address2
+        // };
     
-        profiles.push(profile);
+        // profiles.push(profile);
         res.send(profile);
     });
 });

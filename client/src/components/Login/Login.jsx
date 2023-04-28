@@ -5,18 +5,19 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 export default function Login() {
   const [fillData, setFillData] = useState({});
+  const [putData, putQuoteData] = useState({});
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    fetch('http://localhost:3059/login/fill')
-      .then(response => response.json())
-      .then(data => setFillData(data))
-      .catch(error => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:3059/login/fill')
+  //     .then(response => response.json())
+  //     .then(data => setFillData(data))
+  //     .catch(error => console.error(error));
+  // }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

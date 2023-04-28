@@ -8,7 +8,7 @@ POST http://localhost:3059/quotes
 Content-Type: application/json
 
 {
-    "gallons": 2,
+    "gallons": 720,
     "deliveryDate": "2015-03-25",
     "address": "101 Main Street",
     "price": 4,
@@ -23,8 +23,8 @@ POST http://localhost:3059/login
 Content-Type: application/json
 
 {
-    "username": "kyle",
-    "password": "123d45g67y8"
+    "username": "user4",
+    "password": "user4"
 }
 
 ###

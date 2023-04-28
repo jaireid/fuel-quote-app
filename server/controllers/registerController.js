@@ -1,23 +1,28 @@
 const express = require('express');
-const db = require('../config/db');
+// const db = require('../config/db');
 const mysql = require('mysql');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
 
-let registers = [
+db.connect((err) => {
+    if (err) throw err;
+    //else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
     {
-        "username": "kyle",
-        "password": "123d45g67y8",
-        "confirmPassword": "123d45g67y8"
-    }
-];
+        if (err) throw err;
+    });
 
-router.get('/', (req, res) => {
-    res.json(registers);
 });
-
 
 router.post('/', (req, res) => {
     if (!req.body.username || !req.body.password || !req.body.confirmPassword) {
@@ -49,14 +54,7 @@ router.post('/', (req, res) => {
         const query = `INSERT INTO credentials(username,password) VALUES('${username}', '${hash}')`;
         db.query(query, function(err, result, fields) {
             if (err) throw err;
-
-            const register = {
-                id: result.insertId,
-                username: username,
-                password: hash
-            };
-
-            registers.push(register);
+            
             res.redirect('/login');
             res.status(200);
         });

@@ -1,49 +1,45 @@
+import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
-function BasicExample() {
+export default function History() {
+  const [fillData, setFillData] = useState({});
+
+  useEffect(() => {
+    fetch('http://localhost:3059/quotes/fill')
+        .then(
+            response => response.json()
+        )
+        .then(
+            data => {
+                setFillData(data);
+        })
+  }, []);
+
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Gallons Requested</th>
-          <th>Delivery Address</th>
-          <th>Delivery Date</th>
-         <th>Suggested Price/Gallon</th>
-         <th>Total Amount Paid</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>10</td>
-          <td>123 Main St</td>
-          <td>2022-02-20</td>
-          <td>$4.50</td>
-          <td>$45.00</td>
-        </tr>
-        <tr>
-          <td>20</td>
-          <td>456 Fake St</td>
-          <td>2022-01-25</td>
-          <td>$4.50</td>
-          <td>$90.00</td>
-        </tr>
-        <tr>
-          <td>100</td>
-          <td>789 Real St</td>
-          <td>2021-12-23</td>
-          <td>$4.50</td>
-          <td>$450.00</td>
-        </tr>
-        <tr>
-          <td>1500</td>
-          <td>1234 True St</td>
-          <td>2021-11-27</td>
-          <td>$4.50</td>
-          <td>$6750.00</td>
-        </tr>
-      </tbody>
-  </Table>
+    <>
+        <h1>Fuel Quote History</h1>
+        <Table striped bordered hover>
+            <thead>
+                <tr>
+                    <th>Delivery Address</th>
+                    <th>Delivery Date</th>
+                    <th>Gallons Requested</th>
+                    <th>Suggested Price/Gallon</th>
+                    <th>Total Amount Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                {fillData.map((row, index) => (
+                    <tr key={index}>
+                        <td>{row.address}</td>
+                        <td>{row.deliveryDate}</td>
+                        <td>{row.gallons}</td>
+                        <td>{row.price}</td>
+                        <td>{row.due}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>
+    </>
   );
 }
-
-export default BasicExample;

@@ -77,6 +77,7 @@ export default function Quote() {
             else{
                 location_factor = 0.04
             }
+            
             if ( isReturningCustomer = customerOrders.length > 0){
                 return_discount = -0.01
             }

@@ -1,19 +1,31 @@
 const express = require('express');
-const db = require('../config/db');
+// const db = require('../config/db');
 const router = express.Router();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-// let logins = [
-//     {
-//         "username": "kyle",
-//         "password": "123d45g67y8"
-//     }
-// ];
+const db = mysql.createConnection
+    ({
+        host: 'sql9.freemysqlhosting.net',
+        user: 'sql9598279',
+        password: '55U3QzBa79',
+        database: 'sql9598279'
+    });
+
+db.connect((err) => {
+    if (err) throw err;
+    //else{console.log('Connected to MySQL Server!');}
+
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
+    {
+        if (err) throw err;
+    });
+
+});
 
 // router.get('/', (req, res) => {
-//     res.json(login);
+//     res.render('/');
 // });
 
 router.post('/', (req, res) => {
@@ -32,6 +44,7 @@ router.post('/', (req, res) => {
             const hashedPassword = result[0].password;
             bcrypt.compare(password, hashedPassword, function (err, bcryptResult) {
                 if (err) throw err;
+                console.log("failing hash")
                 console.log(bcryptResult);
                 if (bcryptResult) {
                     // Login is valid
@@ -39,7 +52,7 @@ router.post('/', (req, res) => {
                     console.log(result[0].username);
                     req.session.userID = user.id;
                     res.send("Login successful");
-                    res.redirect('/profile');
+                    // res.redirect('/quote');
                 } else {
                     // Login is not valid
                     //console.log("Password is wrong");
