@@ -91,5 +91,78 @@ describe('POST /register', () => {
     expect(response.text).toBe('Username already taken');
   });
 
+  describe('POST /profile', () => {
 
+    it('should return a 400 status if the required fields are not provided', async () => {
+      const response = await supertest(app).post('/profile').send({});
+      expect(response.status).toBe(400);
+      expect(response.text).toBe('Missing required fields');
+    });
+
+    it('should return a 400 status if name is over 50 or more characters', async () => {
+      const response = await supertest(app).post('/profile').send({
+        name: "123456789012345678901234567890123456789012345678901",
+        city: "houston",
+        region: "tx",
+        zipcode: "77002",
+        address1: "101 main street",
+        address2: "101 main street"
+      })
+      expect(response.status).toBe(400)
+      expect(response.text).toBe('Name cannot exceed 50 characters');
+    });
+
+    it('should return a 400 status if address 1 is over 100 or more characters', async () => {
+      const response = await supertest(app).post('/profile').send({
+        name: "kyle",
+        city: "houston",
+        region: "tx",
+        zipcode: "77002",
+        address1: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901",
+        address2: "101 main street"
+      })
+      expect(response.status).toBe(400)
+      expect(response.text).toBe('Address 1 cannot exceed 100 characters');
+    });
+
+    it('should return a 400 status if city is over 100 or more characters', async () => {
+      const response = await supertest(app).post('/profile').send({
+        name: "kyle",
+        city: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901",
+        region: "tx",
+        zipcode: "77002",
+        address1: "101 main street",
+        address2: "101 main street"
+      })
+      expect(response.status).toBe(400)
+      expect(response.text).toBe('City cannot exceed 100 characters');
+    });
+
+    it('should return a 400 status if zipcode is over 9 or more below 5 digits', async () => {
+      const response = await supertest(app).post('/profile').send({
+        name: "kyle",
+        city: "houston",
+        region: "tx",
+        zipcode: "1",
+        address1: "101 main street",
+        address2: "101 main street"
+      })
+      expect(response.status).toBe(400)
+      expect(response.text).toBe('Zipcode must be between 5 and 9 digits');
+    });
+    
+    it('should create a new profile', async () => {
+      const response = await supertest(app).post('/profile').send({
+        name: "kyle",
+        city: "houston",
+        region: "tx",
+        zipcode: "77002",
+        address1: "101 main street",
+        address2: "101 main street"
+      })
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('id');
+      expect(response.body).toHaveProperty('name', 'kyle');
+    });
+  })
 });
