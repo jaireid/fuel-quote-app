@@ -1,9 +1,8 @@
 const express = require('express');
-// const db = require('../config/db');
-const mysql = require('mysql');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-
+const mysql = require('mysql');
+// const db = require('../config/db');
 
 const db = mysql.createConnection
     ({
@@ -15,13 +14,7 @@ const db = mysql.createConnection
 
 db.connect((err) => {
     if (err) throw err;
-    //else{console.log('Connected to MySQL Server!');}
-
-    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
-    {
-        if (err) throw err;
-    });
-
+    console.log('Connected to MySQL Server!');
 });
 
 const saltRounds = 10;
@@ -52,12 +45,13 @@ router.post('/', (req, res) => {
         bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
             if(err) {
                 res.status(400).send('Hash error');
+                return;
             }
     
             const query = `INSERT INTO credentials(username,password) VALUES('${username}', '${hashedPassword}')`;
             db.query(query, function(err, result, fields) {
                 if (err) throw err;
-                
+
                 res.redirect('/login');
             });
         })

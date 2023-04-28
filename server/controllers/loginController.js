@@ -1,8 +1,9 @@
 const express = require('express');
-// const db = require('../config/db');
 const router = express.Router();
-const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+const mysql = require('mysql');
+const path = require('path');
+// const db = require('../config/db');
 const saltRounds = 10;
 
 const db = mysql.createConnection
@@ -22,6 +23,17 @@ db.connect((err) => {
         if (err) throw err;
     });
 
+});
+
+// // Serve static files from the client folder
+// router.use(express.static(path.join(__dirname, 'client')));
+
+// // Route to the login page
+// router.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'components', 'Login.jsx'));
+// });
+router.get('/', (req, res) => {
+    res.redirect('/login');
 });
 
 router.post('/', (req, res) => {

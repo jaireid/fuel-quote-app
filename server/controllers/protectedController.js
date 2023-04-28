@@ -1,7 +1,7 @@
 const express = require('express');
-// const db = require('../config/db');
 const router = express.Router();
 const mysql = require('mysql');
+// const db = require('../config/db');
 
 const db = mysql.createConnection
     ({
@@ -14,12 +14,6 @@ const db = mysql.createConnection
 db.connect((err) => {
     if (err) throw err;
     //else{console.log('Connected to MySQL Server!');}
-
-    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
-    {
-        if (err) throw err;
-    });
-
 });
 
 // Middleware to protect routes

@@ -1,25 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import axios from '../api/axios';
+const LOGIN_URL = '/login';
 
 export default function Login() {
-  const [fillData, setFillData] = useState({});
-  const [putData, putQuoteData] = useState({});
-  const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [putData, putQuoteData] = useState({});
+  const [validated, setValidated] = useState(false);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3059/login/fill')
-  //     .then(response => response.json())
-  //     .then(data => setFillData(data))
-  //     .catch(error => console.error(error));
-  // }, []);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if(form.checkValidity() === false){
@@ -31,15 +23,32 @@ export default function Login() {
 
     setValidated(true);
 
-    fetch('http://localhost:3059/login',{
-      method: 'POST',
-      credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(putData)
-    })
-      .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(error => console.error(error));
+    try {
+      const response = await axios.post(LOGIN_URL,
+          JSON.stringify({ username, password }),
+          {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true
+          }
+      );
+
+      console.log(JSON.stringify(response?.data));
+      setUsername('');
+      setPassword('');
+      
+    } catch (err) {
+      console.error(err);
+    }
+
+    // fetch('http://localhost:3059/login',{
+    //   method: 'POST',
+    //   credentials: 'include',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify(putData)
+    // })
+    //   .then(response => response.json())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.error(error));
   };
 
 

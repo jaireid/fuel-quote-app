@@ -35,7 +35,7 @@ POST http://localhost:3059/register
 Content-Type: application/json
 
 {
-    "username": "esxrdc",
+    "username": "bvrtdf",
     "password": "123d45g67y8",
     "confirmPassword": "123d45g67y8"
 }

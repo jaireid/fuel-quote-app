@@ -29,7 +29,7 @@ export default function History() {
                 </tr>
             </thead>
             <tbody>
-                {/* {fillData.map((row, index) => (
+                {fillData.map((row, index) => (
                     <tr key={index}>
                         <td>{row.address}</td>
                         <td>{row.deliveryDate}</td>
@@ -37,7 +37,7 @@ export default function History() {
                         <td>{row.price}</td>
                         <td>{row.due}</td>
                     </tr>
-                ))} */}
+                ))}
             </tbody>
         </Table>
     </>

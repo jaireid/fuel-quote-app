@@ -1,13 +1,12 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Navigation from './components/Navigation/Navigation.jsx';
-import Login from './components/Login/Login.jsx';
-import Register from './components/Register/Register.jsx';
-import Profile from './components/Profile/Profile.jsx';
-import Quote from './components/Quote/Quote.jsx';
-import  History from './components/History/History.jsx';
+import Navigation from './components/Navigation.jsx';
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
+import Profile from './components/Profile.jsx';
+import Quote from './components/Quote.jsx';
+import  History from './components/History.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 
 function App() {
   return (

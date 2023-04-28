@@ -1,19 +1,18 @@
 require('dotenv').config();
 const express = require('express');
-// const db = require('./config/db');
 const cors = require('cors');
+const mysql = require('mysql');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const helmet = require('helmet');
+const reactViews = require('express-react-views');
 const cookieParser = require("cookie-parser");
-const csurf = require("tiny-csrf");
-const rateLimit = require('express-rate-limit');
-const mysql = require('mysql');
+// const csurf = require("tiny-csrf");
 const quotesController = require('./controllers/quotesController');
 const protectedController = require('./controllers/protectedController');
 const loginController = require('./controllers/loginController');
 const profileController = require('./controllers/profileController');
 const registerController = require('./controllers/registerController');
+// const db = require('../config/db');
 
 const app = express();
 const port = process.env.PORT;
@@ -29,12 +28,6 @@ const db = mysql.createConnection
 db.connect((err) => {
     if (err) throw err;
     //else{console.log('Connected to MySQL Server!');}
-
-    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
-    {
-        if (err) throw err;
-    });
-
 });
 
 const sessionStore = new MySQLStore({
@@ -50,15 +43,33 @@ const sessionStore = new MySQLStore({
     }
 }, db);
 
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-var corsOptions = {
-    origin: "http://localhost:5173",
-    credentials: true
-  };
+
+const allowedOrigins = [
+    
+    'http://localhost:3059',
+    'http://localhost:5173',
+    'http://localhost:3000'
+];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
-// app.use(cors());
+
+// app.set('views', __dirname + '/../client/src/components/Login');
+// app.set('view engine', 'ejs');
+// app.engine('jsx', reactViews.createEngine());
 
 // app.use(cookieParser("cookie-parser-secret"));
 
@@ -85,6 +96,7 @@ sessionStore.onReady().then(() => {
 });
 
 // app.use((req, res, next) => {
+
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 //     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -92,19 +104,12 @@ sessionStore.onReady().then(() => {
 //     next();
 // });
 
-// app.use(helmet())
-
 // app.use(
 //     csurf(
 //         "123456789iamasecret987654321look",
 //         ["GET", "POST"]
 //     )
 // );
-
-// app.use(rateLimit({
-//     windowMs: 60 * 1000,
-//     max: 10, // limit each IP to 10 requests per minute
-// }));  
 
 app.use('/protected', protectedController);
 app.use('/quotes', quotesController);
@@ -119,7 +124,6 @@ app.use((err, req, res, next) => {
     console.log(err.code);
 });
 
-// Listen
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
 module.exports = app;

@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-// import axios from 'axios';
-import axios from '../../api/axios';
+import axios from '../api/axios';
 const REGISTER_URL = '/register';
 
 export default function Register() {
@@ -35,18 +34,6 @@ export default function Register() {
 		return;
 		}
 
-		// const data = {
-		// 	username,
-		// 	password,
-		// 	confirmPassword
-		// };
-
-		// axios.post('http://localhost:3059/register', data, { withCredentials: true })
-		// 	.then(response => {
-		// 		console.log(response);
-		// 	})
-		// 	.catch(error => console.error(error));
-
 		try {
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ username, password, confirmPassword}),
@@ -55,12 +42,12 @@ export default function Register() {
                     withCredentials: true
                 }
             );
+
 			console.log(response);
-            // TODO: remove console.logs before deployment
             console.log(JSON.stringify(response?.data));
            
         } catch (error) {
-            error => console.error(error)
+            console.error(error)
 		}
 		
         // fetch('http://localhost:3059/register', {
