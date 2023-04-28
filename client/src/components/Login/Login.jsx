@@ -49,8 +49,6 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-
-
   return (
     <>
       <h1>Login Form</h1>

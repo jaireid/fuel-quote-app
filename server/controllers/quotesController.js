@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../config/db');
 const mysql = require('mysql');
 const router = express.Router();
 
@@ -12,32 +13,21 @@ let quotes = [
     { id: 2, gallons: 10, deliveryDate: "2015-03-25", address: '101 Main Street', price: 2, due: 20 },
 ];
 
-const db = mysql.createConnection
-    ({
-        host: 'sql9.freemysqlhosting.net',
-        user: 'sql9598279',
-        password: '55U3QzBa79',
-        database: 'sql9598279'
-    });
-
-db.connect((err) => {
-    if (err) throw err;
-    else{console.log('Connected to MySQL Server!');}
-
-    db.query("SELECT customer_state FROM sql9598279.customer_accounts;", function (err, result, fields)
-    {
-        if (err) throw err;
-        //else{console.log(result);}
-    });
-});
+function requireAuth(req, res, next) {
+    if(req.session.userID) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
 
 // Get all quotes from database
-router.get('/', (req, res) => {
+router.get('/', requireAuth, (req, res) => {
     res.json(quotes);
 });
 
 // Get user data to fill quote
-router.get('/fill', (req, res) => {
+router.get('/fill', requireAuth, (req, res) => {
     const data = fill;
 
     if (!data) return res.status(404).send('Fill info not found');
@@ -46,7 +36,7 @@ router.get('/fill', (req, res) => {
 });
   
 // Create a new quote and send to database
-router.post('/', (req, res) => {
+router.post('/', requireAuth, (req, res) => {
     if (!req.body.gallons || !req.body.deliveryDate) {
         res.status(400).send('Missing required fields');
         return;

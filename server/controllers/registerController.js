@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../config/db');
 const mysql = require('mysql');
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -12,25 +13,6 @@ let registers = [
         "confirmPassword": "123d45g67y8"
     }
 ];
-
-const db = mysql.createConnection
-    ({
-        host: 'sql9.freemysqlhosting.net',
-        user: 'sql9598279',
-        password: '55U3QzBa79',
-        database: 'sql9598279'
-    });
-
-db.connect((err) => {
-    if (err) throw err;
-    else{console.log('Connected to MySQL Server!');}
-
-    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
-    {
-        if (err) throw err;
-        //else{console.log(result);}
-    });
-});
 
 router.get('/', (req, res) => {
     res.json(registers);
@@ -75,6 +57,7 @@ router.post('/', (req, res) => {
             };
 
             registers.push(register);
+            res.redirect('/login');
             res.status(200);
         });
     });

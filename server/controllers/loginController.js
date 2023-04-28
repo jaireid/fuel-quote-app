@@ -1,31 +1,20 @@
 const express = require('express');
+const db = require('../config/db');
 const router = express.Router();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const db = mysql.createConnection
-    ({
-        host: 'sql9.freemysqlhosting.net',
-        user: 'sql9598279',
-        password: '55U3QzBa79',
-        database: 'sql9598279'
-    });
+// let logins = [
+//     {
+//         "username": "kyle",
+//         "password": "123d45g67y8"
+//     }
+// ];
 
-db.connect((err) => {
-    if (err) throw err;
-    //else{console.log('Connected to MySQL Server!');}
-
-    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
-    {
-        if (err) throw err;
-    });
-
-});
-
-router.get('/', (req, res) => {
-    res.json(login);
-});
+// router.get('/', (req, res) => {
+//     res.json(login);
+// });
 
 router.post('/', (req, res) => {
     if (!req.body.username || !req.body.password) {
@@ -48,8 +37,9 @@ router.post('/', (req, res) => {
                     // Login is valid
                     console.log("Login is valid");
                     console.log(result[0].username);
+                    req.session.userID = user.id;
                     res.send("Login successful");
-
+                    res.redirect('/profile');
                 } else {
                     // Login is not valid
                     //console.log("Password is wrong");
@@ -63,6 +53,5 @@ router.post('/', (req, res) => {
         }
     });
 });
-
 
 module.exports = router;
