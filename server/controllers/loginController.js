@@ -4,13 +4,6 @@ const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
-let logins = [
-    {
-        "username": "kyle",
-        "password": "123d45g67y8"
-    }
-];
 const db = mysql.createConnection
     ({
         host: 'sql9.freemysqlhosting.net',

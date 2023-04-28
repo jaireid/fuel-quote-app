@@ -76,6 +76,35 @@ describe('POST /login', () => {
     expect(response.status).toBe(401);
     expect(response.text).toBe('Invalid login credentials');
   });
+  test('should return "Invalid login credentials" if password is incorrect', async () => {
+    const newLogin = {
+      id: 1,
+      username: 'username',
+      password: 'wrongPassword'
+    };
+  
+    const response = await supertest(app)
+    .post('/login')
+    .send(newLogin);
+  
+    expect(response.status).toBe(401);
+    expect(response.text).toBe('Invalid login credentials');
+  });
+  
+  test('should return "Invalid login credentials" if username is incorrect', async () => {
+    const newLogin = {
+      id: 1,
+      username: 'wrongUsername',
+      password: 'password123password123'
+    };
+  
+    const response = await supertest(app)
+    .post('/login')
+    .send(newLogin);
+  
+    expect(response.status).toBe(401);
+    expect(response.text).toBe('Invalid login credentials');
+  });
 });
 
 
@@ -89,6 +118,16 @@ describe('POST /register', () => {
     });
     expect(response.status).toBe(400);
     expect(response.text).toBe('Username already taken');
+  });
+
+  it('should return a 400 status if the 2 passwords dont match', async () => {
+    const response = await supertest(app).post('/register').send({
+      username: 'kyle',
+      password: 'password',
+      confirmPassword: 'password123',
+    });
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('Passwords do not match');
   });
 
   describe('POST /profile', () => {
