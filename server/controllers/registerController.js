@@ -25,7 +25,7 @@ db.connect((err) => {
     if (err) throw err;
     else{console.log('Connected to MySQL Server!');}
 
-    db.query("SELECT customer_state FROM sql9598279.customer_accounts;", function (err, result, fields)
+    db.query("SELECT username FROM sql9598279.credentials;", function (err, result, fields)
     {
         if (err) throw err;
         //else{console.log(result);}
@@ -54,7 +54,16 @@ router.post('/', (req, res) => {
 
     bcrypt.hash(password, saltRounds, function(err, hash) {
         if (err) throw err;
-
+        db.query(`SELECT username FROM sql9598279.credentials WHERE username='${username}';`, function (err, result, fields)
+            {
+            if (err) throw err;
+            //else{console.log(result);}
+            if(result.length>0)
+            {
+                res.status(400).send("Username already taken");
+                return;
+            }
+        });
         const query = `INSERT INTO credentials(username,password) VALUES('${username}', '${hash}')`;
         db.query(query, function(err, result, fields) {
             if (err) throw err;
@@ -66,7 +75,7 @@ router.post('/', (req, res) => {
             };
 
             registers.push(register);
-            res.send(register);
+            res.status(200);
         });
     });
 });

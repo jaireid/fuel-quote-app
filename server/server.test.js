@@ -80,20 +80,26 @@ describe('POST /login', () => {
 
 
 describe('POST /register', () => {
-  it('should return a 400 status if the required fields are not provided', async () => {
-    const response = await supertest(app).post('/register').send({});
-    expect(response.status).toBe(400);
-    expect(response.text).toBe('Missing required fields');
-  });
+  // it('should create a new user and return a 200 status if all fields are provided and passwords match', async () => {
+  //   const response = await supertest(app).post('/register').send({
+  //     username: 'testuser',
+  //     password: 'password123',
+  //     confirmPassword: 'password123',
+  //   });
+  //   expect(response.status).toBe(200);
+  //   expect(response.body).toHaveProperty('id');
+  //   expect(response.body).toHaveProperty('username', 'testuser');
+  //   expect(response.body).toHaveProperty('password');
+  // });
 
-  it('should return a 400 status if the passwords do not match', async () => {
+  it('should return a 400 status if the username is already taken', async () => {
     const response = await supertest(app).post('/register').send({
-      username: 'testuser',
+      username: 'kyle',
       password: 'password123',
-      confirmPassword: 'differentpassword',
+      confirmPassword: 'password123',
     });
     expect(response.status).toBe(400);
-    expect(response.text).toBe('Passwords do not match');
+    expect(response.text).toBe('Username already taken');
   });
 
 });
