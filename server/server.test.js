@@ -96,4 +96,17 @@ describe('POST /register', () => {
     expect(response.text).toBe('Passwords do not match');
   });
 
+  it('should create a new user', async () => {
+    const newRegister = {
+      username: "user",
+      password: "password",
+      confirmPassword: "password"
+    }
+    const response = await supertest(app)
+    .post('/register')
+    .send(newRegister)
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty('username', 'user');
+  });
 });
