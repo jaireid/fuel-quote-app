@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -91,6 +91,7 @@ export default function Profile() {
 							placeholder='Name' 
                             maxLength='50' 
 							required
+                            value={fillData.name || ''}
                             name = "name"
                             onChange={handleChange}
 						/>
@@ -107,6 +108,7 @@ export default function Profile() {
 							placeholder='Street address or P.O. Box' 
                             maxLength='100' 
 							required
+                            value={fillData.address1 || ''}
                             name = "address1"
                             onChange={handleChange}
 						/>
@@ -121,6 +123,7 @@ export default function Profile() {
                         type='text' 
                         placeholder='Apt, suite, unit, building, floor, ect.' 
                         maxLength='100'
+                        value={fillData.address2 || ''}
                         name = "address2"
                         onChange={handleChange}
                     />
@@ -133,6 +136,7 @@ export default function Profile() {
 							placeholder='Enter City' 
                             maxLength='100' 
 							required
+                            value={fillData.city || ''}
                             name = "city"
                             onChange={handleChange}
 						/>
@@ -144,7 +148,7 @@ export default function Profile() {
                 <Form.Group className='mb-3' controlId='state'>
           			<Form.Label>State</Form.Label>
                     <InputGroup hasValidation>
-                        <Form.Select required name="region" onChange={handleChange}>
+                        <Form.Select required name="region" onChange={handleChange} value={fillData.region || ''}>
                             <option value="">Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -212,6 +216,7 @@ export default function Profile() {
                             minLength='5' 
                             maxLength='9' 
 							required
+                            value={fillData.zipcode || ''}
                             name = "zipcode"
                             onChange={handleChange}
 						/>
