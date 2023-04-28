@@ -32,6 +32,7 @@ db.connect((err) => {
 // router.get('/', (req, res) => {
 //     res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'components', 'Login.jsx'));
 // });
+
 router.get('/', (req, res) => {
     res.redirect('/login');
 });
@@ -60,13 +61,13 @@ router.post('/', (req, res) => {
                     // Login is valid
                     console.log("Login is valid");
                     console.log(result[0].username);
-                    req.session.userId = result[0].username;
-                    if(!req.session.userId){
-                        req.session.userId = result[0].username;
-                        res.redirect('/quote');
-                    } else {
-                        res.redirect('/quote');
-                    }
+                    // req.session.userId = result[0].username;
+                    // if(!req.session.userId){
+                    //     req.session.userId = result[0].username;
+                    //     res.redirect('/quote');
+                    // } else {
+                    //     res.redirect('/quote');
+                    // }
                 } else {
                     // Login is not valid
                     //console.log("Password is wrong");

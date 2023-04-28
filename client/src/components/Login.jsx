@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from '../api/axios';
+import { useNavigate } from "react-router-dom";
 const LOGIN_URL = '/login';
 
 export default function Login() {
@@ -10,6 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   // const [putData, putQuoteData] = useState({});
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,8 +35,8 @@ export default function Login() {
       );
 
       console.log(JSON.stringify(response?.data));
-      setUsername('');
-      setPassword('');
+      navigate('/login'); 
+
       
     } catch (err) {
       console.error(err);

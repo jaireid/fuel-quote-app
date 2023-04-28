@@ -25,11 +25,11 @@ db.connect((err) => {
 //     }
 // });
 
-router.post('/logout', (req, res) => {
-    req.session.destroy((error) => {
-        if (err) throw err;
-        res.redirect('/login');
-    });
-});
+// router.post('/logout', (req, res) => {
+//     req.session.destroy((error) => {
+//         if (err) throw err;
+//         res.redirect('/login');
+//     });
+// });
 
 module.exports = router;

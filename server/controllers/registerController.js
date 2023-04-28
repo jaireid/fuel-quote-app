@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
             db.query(query, function(err, result, fields) {
                 if (err) throw err;
 
-                res.redirect('/login');
+                // res.redirect('/login');
             });
         })
     });

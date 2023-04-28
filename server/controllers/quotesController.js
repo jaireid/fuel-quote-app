@@ -16,16 +16,16 @@ db.connect((err) => {
     //else{console.log('Connected to MySQL Server!');}
 });
 
-function requireAuth(req, res, next) {
-    if(req.session.userId) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-}
+// function requireAuth(req, res, next) {
+//     if(req.session.userId) {
+//         next();
+//     } else {
+//         res.redirect('/login');
+//     }
+// }
 
 // Get user data to fill quote
-router.get('/fill', requireAuth, (req, res) => {
+router.get('/fill', (req, res) => {
     if (!req) return res.status(404).send('Fill info not found');
 
     const query = `SELECT * FROM sql9598279.quotes`
@@ -38,7 +38,7 @@ router.get('/fill', requireAuth, (req, res) => {
 });
   
 // Create a new quote and send to database
-router.post('/', requireAuth, (req, res) => {
+router.post('/', (req, res) => {
     if (!req.body.gallons || !req.body.deliveryDate) {
         res.status(400).send('Missing required fields');
         return;

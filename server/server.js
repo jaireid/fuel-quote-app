@@ -30,18 +30,18 @@ db.connect((err) => {
     //else{console.log('Connected to MySQL Server!');}
 });
 
-const sessionStore = new MySQLStore({
-    expiration: 86400000,
-    createDatabaseTable: true,
-    schema: {
-        tableName: 'sessions',
-        columnNames: {
-            session_id: 'session_id',
-            expires: 'expires',
-            data: 'data'
-        }
-    }
-}, db);
+// const sessionStore = new MySQLStore({
+//     expiration: 86400000,
+//     createDatabaseTable: true,
+//     schema: {
+//         tableName: 'sessions',
+//         columnNames: {
+//             session_id: 'session_id',
+//             expires: 'expires',
+//             data: 'data'
+//         }
+//     }
+// }, db);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -67,33 +67,35 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use(cors());
+
 // app.set('views', __dirname + '/../client/src/components/Login');
 // app.set('view engine', 'ejs');
 // app.engine('jsx', reactViews.createEngine());
 
 // app.use(cookieParser("cookie-parser-secret"));
 
-app.use(session({
-    key: 'session_cookie_name',
-    secret: 'gsyugyusad6567fvfdsagy3653258325',
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: true,
-        httpOnly: true,
-        sameSite: 'strict',
-        maxAge: 3600000
-    }
-}));
+// app.use(session({
+//     key: 'session_cookie_name',
+//     secret: 'gsyugyusad6567fvfdsagy3653258325',
+//     store: sessionStore,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//         secure: true,
+//         httpOnly: true,
+//         sameSite: 'strict',
+//         maxAge: 3600000
+//     }
+// }));
 
-sessionStore.onReady().then(() => {
-	// MySQL session store ready for use.
-	console.log('MySQLStore ready');
-}).catch(error => {
-	// Something went wrong.
-	console.error(error);
-});
+// sessionStore.onReady().then(() => {
+// 	// MySQL session store ready for use.
+// 	console.log('MySQLStore ready');
+// }).catch(error => {
+// 	// Something went wrong.
+// 	console.error(error);
+// });
 
 // app.use((req, res, next) => {
 
