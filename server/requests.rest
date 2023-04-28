@@ -41,6 +41,9 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:3059/profile/fill
+
+###
 POST http://localhost:3059/profile
 Content-Type: application/json
 

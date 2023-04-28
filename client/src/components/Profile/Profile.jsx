@@ -15,6 +15,17 @@ export default function Profile() {
     const [region, setRegion] = useState('')
     const [zipcode, setZipcode] = useState('')
 
+    useEffect(() => {
+        fetch('http://localhost:3059/profile/fill')
+            .then(
+                response => response.json()
+            )
+            .then(
+                data => {
+                    setFillData(data);
+            })
+    }, []);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const form = event.currentTarget;

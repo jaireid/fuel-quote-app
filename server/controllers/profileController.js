@@ -35,13 +35,25 @@ function requireAuth(req, res, next) {
     }
 }
 
+router.get('/fill', requireAuth, (req, res) => {
+    if (!req) return res.status(404).send('Fill info not found');
+
+    const query = `SELECT * FROM sql9598279.customer_accounts WHERE customer_id = ${req.session.userID}`
+
+    db.query(query, function(err, result, fields) {
+        if (err) throw err;
+
+        res.send(result);
+    });
+});
+
 // Create a new quote and send to database
 router.post('/', requireAuth, (req, res) => {
     if (!req.body.name || !req.body.address1 || !req.body.address2 || !req.body.city || !req.body.region || !req.body.zipcode) {
         res.status(400).send('Missing required fields');
         return;
     }
-    
+    const userID = req.session.userID
     const name = req.body.name;
     const address1 = req.body.address1;
     const address2 = req.body.address2;
@@ -69,7 +81,7 @@ router.post('/', requireAuth, (req, res) => {
         res.status(400).send('Zipcode must be between 5 and 9 digits');
         return;
     }
-    const query = `INSERT INTO sql9598279.customer_accounts(customer_name, customer_city, customer_state, customer_zipcode, customer_address1, customer_address2) VALUES('${name}', '${city}', '${region}', '${zipcode}', '${address1}', '${address2}')`;
+    const query = `INSERT INTO sql9598279.customer_accounts(customer_id, customer_name, customer_city, customer_state, customer_zipcode, customer_address1, customer_address2) VALUES('${userID}','${name}', '${city}', '${region}', '${zipcode}', '${address1}', '${address2}')`;
 
     db.query(query, function(err, result, fields) {
         if (err) throw err;
