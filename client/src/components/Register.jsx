@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import axios from '../api/axios';
-const REGISTER_URL = '/register';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
     const [validated, setValidated] = useState(false);
 	const [putData, putQuoteData] = useState({});
+    let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,43 +23,15 @@ export default function Register() {
 
         setValidated(true);
 
-		const { username, password, confirmPassword } = putData;
+        fetch('http://localhost:3059/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(putData)
+          })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.error(error));
 
-		if (!username || !password || !confirmPassword) {
-			console.error('Missing required fields');
-			return;
-		  }
-		
-		if (password !== confirmPassword) {
-		console.error('Passwords do not match');
-		return;
-		}
-
-		try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ username, password, confirmPassword}),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-
-			console.log(response);
-            console.log(JSON.stringify(response?.data));
-           
-        } catch (error) {
-            console.error(error)
-		}
-		
-        // fetch('http://localhost:3059/register', {
-        //     method: 'POST',
-		// 	credentials: 'include',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(putData)
-        //   })
-        //     .then(response => response.json())
-        //     .then(result => console.log(result))
-        //     .catch(error => console.error(error));
     };
 
     const handleUsernameChange = (event) => {
@@ -71,7 +44,7 @@ export default function Register() {
 
 	const handleUsernamePassword = (event) => {
 		const { name, value } = event.target;
-		if(name === "password") {
+		if(name == "password") {
 			const password = value;
 			putQuoteData({ ...putData, password });
 		}
@@ -79,7 +52,7 @@ export default function Register() {
 
 	const handleUsernameConfirmPassword = (event) => {
 		const { name, value } = event.target;
-		if(name === "confirmPassword") {
+		if(name == "confirmPassword") {
 			const confirmPassword = value;
 			putQuoteData({ ...putData, confirmPassword });
 		}

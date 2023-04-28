@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function Quote() {
     const [fillData, setFillData] = useState({});
     const [putData, putQuoteData] = useState({});
+    const [sp, setSP] = useState(0);
     const [deliveryDate, setDeliveryDate] = useState(null);
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
@@ -21,8 +22,9 @@ export default function Quote() {
             )
             .then(
                 data => {
+                    console.log(data)
                     setFillData(data);
-                    setCustomerOrders(data);
+                    setCustomerInfo(data);
 
             })
     }, []);
@@ -44,7 +46,6 @@ export default function Quote() {
 
         fetch('http://localhost:3059/quotes', {
             method: 'POST',
-            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(putData)
           })
@@ -57,11 +58,15 @@ export default function Quote() {
         const { name, value } = event.target;
         setCustomerInfo({ ...customerInfo, [name]: value });
 
-        // putQuoteData({ ...putData, [name]: value });
         if (name === "gallons") {
-            const suggestedPrice = fillData.price || 0;
+            const suggestedPrice = 1.5 || 0;
             const gallons = parseFloat(value) || 0;
-            const address = fillData.address || ""; 
+            // const address = fillData[0]?.address || ""; 
+            const address = "123 Main Street" || ""; 
+            let bulk_buy = 0;
+            let location_factor = 0;
+            let isReturningCustomer = false;
+            let return_discount = 0;
             
            //start calculation of the final fuel price 
             const company_profit = .1
@@ -79,19 +84,18 @@ export default function Quote() {
                 location_factor = 0.04
             }
             
-            if ( isReturningCustomer = customerOrders.length > 0){
+            if ( isReturningCustomer === customerInfo.length > 0){
                 return_discount = -0.01
             }
             else{
                 return_discount = 0
             }
 
-            margin  = suggestedPrice * (bulk_buy + company_profit + location_factor + return_discount)
-            customer_ppg = suggestedPrice + margin
-            // finish price calculation module 
-
-            const due = (gallons * (customer_ppg)).toFixed(2);
-            putQuoteData({ ...putData, gallons, due, address, customer_ppg});
+            let margin = suggestedPrice * (bulk_buy + company_profit + location_factor + return_discount)
+            const price = suggestedPrice + margin;
+            const due = (gallons *  price).toFixed(2);
+            
+            putQuoteData({ ...putData, gallons, due, address, price});
         } 
     }
 
@@ -125,7 +129,9 @@ export default function Quote() {
                     <Form.Label>Delivery Address</Form.Label>
                     <Form.Control 
                         type='text' 
-                        value={fillData.address || ''}
+                        // value={fillData[0]?.address || ""}
+                        // onChange={handleChange}  
+                        value={putData.address || ''}
                         readOnly
                     />
                 </Form.Group>
@@ -149,7 +155,7 @@ export default function Quote() {
                     <Form.Label>Suggested Price</Form.Label>
                     <Form.Control 
                         type='number' 
-                        value={fillData.price || ''} 
+                        value={putData.price || ''} 
                         readOnly
                     />
                 </Form.Group>

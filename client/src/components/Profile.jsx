@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
   
 export default function Profile() {
-    const [fillData, setFillData] = useState({})
     const [putData, putQuoteData] = useState({});
     const [validated, setValidated] = useState(false);
     const [name, setName] = useState('')
@@ -14,17 +13,6 @@ export default function Profile() {
     const [city, setCity] = useState('')
     const [region, setRegion] = useState('')
     const [zipcode, setZipcode] = useState('')
-
-    useEffect(() => {
-        fetch('http://localhost:3059/profile/fill')
-            .then(
-                response => response.json()
-            )
-            .then(
-                data => {
-                    setFillData(data);
-            })
-    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -52,6 +40,10 @@ export default function Profile() {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
+        if (name === "userID") {
+            const id = value
+            putQuoteData({ ...putData, id});
+        }
         if (name === "name") {
             const name = value
             putQuoteData({ ...putData, name});
@@ -83,6 +75,21 @@ export default function Profile() {
             <h1>Profile Management</h1>
             {/* The noValidate attribute disables the default browser UI for forms */}
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form.Group className='mb-3' controlId='userID'>
+                    <Form.Label>User ID</Form.Label>
+                    <InputGroup hasValidation>
+                        <Form.Control
+                            type='text' 
+                            placeholder='User ID' 
+                            required
+                            name = "userID"
+                            onChange={handleChange}
+                        />
+                        <Form.Control.Feedback type='invalid'>
+                            Please enter your user ID.
+                        </Form.Control.Feedback>
+                    </InputGroup>
+                </Form.Group>
                 <Form.Group className='mb-3' controlId='name'>
           			<Form.Label>Full Name</Form.Label>
 					<InputGroup hasValidation>
@@ -91,7 +98,6 @@ export default function Profile() {
 							placeholder='Name' 
                             maxLength='50' 
 							required
-                            value={fillData.name || ''}
                             name = "name"
                             onChange={handleChange}
 						/>
@@ -108,7 +114,6 @@ export default function Profile() {
 							placeholder='Street address or P.O. Box' 
                             maxLength='100' 
 							required
-                            value={fillData.address1 || ''}
                             name = "address1"
                             onChange={handleChange}
 						/>
@@ -123,7 +128,6 @@ export default function Profile() {
                         type='text' 
                         placeholder='Apt, suite, unit, building, floor, ect.' 
                         maxLength='100'
-                        value={fillData.address2 || ''}
                         name = "address2"
                         onChange={handleChange}
                     />
@@ -136,7 +140,6 @@ export default function Profile() {
 							placeholder='Enter City' 
                             maxLength='100' 
 							required
-                            value={fillData.city || ''}
                             name = "city"
                             onChange={handleChange}
 						/>
@@ -148,7 +151,7 @@ export default function Profile() {
                 <Form.Group className='mb-3' controlId='state'>
           			<Form.Label>State</Form.Label>
                     <InputGroup hasValidation>
-                        <Form.Select required name="region" onChange={handleChange} value={fillData.region || ''}>
+                        <Form.Select required name="region" onChange={handleChange}>
                             <option value="">Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -216,7 +219,6 @@ export default function Profile() {
                             minLength='5' 
                             maxLength='9' 
 							required
-                            value={fillData.zipcode || ''}
                             name = "zipcode"
                             onChange={handleChange}
 						/>

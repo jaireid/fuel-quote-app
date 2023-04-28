@@ -1,7 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
 const router = express.Router();
-// const db = require('../config/db');
 
 const db = mysql.createConnection
     ({
@@ -13,18 +12,8 @@ const db = mysql.createConnection
 
 db.connect((err) => {
     if (err) throw err;
-    //else{console.log('Connected to MySQL Server!');}
 });
 
-// function requireAuth(req, res, next) {
-//     if(req.session.userId) {
-//         next();
-//     } else {
-//         res.redirect('/login');
-//     }
-// }
-
-// Get user data to fill quote
 router.get('/fill', (req, res) => {
     if (!req) return res.status(404).send('Fill info not found');
 
@@ -54,8 +43,6 @@ router.post('/', (req, res) => {
 
     db.query(query, function(err, result, fields) {
         if (err) throw err;
-
-        res.send(result);
         res.status(200);
     });
 });

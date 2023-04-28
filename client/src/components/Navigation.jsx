@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Stack from 'react-bootstrap/Stack';
 import { useNavigate } from 'react-router-dom';
 
 export default function Navigation() {
@@ -16,10 +16,10 @@ export default function Navigation() {
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className='me-auto'>
                         <Nav.Link href='/quote'>Fuel Quote Form</Nav.Link>
-                        <Nav.Link href='/history'>Quote History</Nav.Link>
+                        <Nav.Link href='/history'>Fuel Quote History</Nav.Link>
                         <Nav.Link href='/profile'>Profile</Nav.Link>
                     </Nav>
-                    <Form className='d-flex'>
+                    <Stack direction="horizontal" gap={3}>
                         <Button 
                             variant='light'
                             onClick={() => {
@@ -28,8 +28,6 @@ export default function Navigation() {
                         >
                             Sign Up
                         </Button>
-                     </Form>
-                    <Form className='d-flex'>
                         <Button 
                             variant='light'
                             onClick={() => {
@@ -38,7 +36,15 @@ export default function Navigation() {
                         >
                             Sign In
                         </Button>
-                    </Form>
+                    </Stack>
+                    {/* <Button 
+                            variant='light'
+                            onClick={() => {
+                                navigate('/login');
+                            }}
+                        >
+                            Sign Out
+                    </Button> */}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

@@ -35,7 +35,7 @@ POST http://localhost:3059/register
 Content-Type: application/json
 
 {
-    "username": "bvrtdf",
+    "username": "qwuhsdgyuqweqw",
     "password": "123d45g67y8",
     "confirmPassword": "123d45g67y8"
 }
@@ -48,6 +48,7 @@ POST http://localhost:3059/profile
 Content-Type: application/json
 
 {
+    "id": "42561435671243567",
     "name": "kyle",
     "city":"houston",
     "region":"tx",
