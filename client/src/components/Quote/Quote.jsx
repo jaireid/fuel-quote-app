@@ -13,6 +13,7 @@ export default function Quote() {
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
     const [customerInfo, setCustomerInfo] = useState({});
+    const [region, setRegion] = useState('')
 
     useEffect(() => {
         fetch('http://localhost:3059/quotes/fill')
@@ -72,7 +73,7 @@ export default function Quote() {
                 bulk_buy = 0.03
             }
 
-            if(/TX/.test(address) || /Texas/.test(address)){
+            if(value === 'TX'){
                 location_factor = 0.02
             }
             else{
