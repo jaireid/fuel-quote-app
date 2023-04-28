@@ -78,3 +78,22 @@ describe('POST /login', () => {
   });
 });
 
+
+describe('POST /register', () => {
+  it('should return a 400 status if the required fields are not provided', async () => {
+    const response = await supertest(app).post('/register').send({});
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('Missing required fields');
+  });
+
+  it('should return a 400 status if the passwords do not match', async () => {
+    const response = await supertest(app).post('/register').send({
+      username: 'testuser',
+      password: 'password123',
+      confirmPassword: 'differentpassword',
+    });
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('Passwords do not match');
+  });
+
+});
