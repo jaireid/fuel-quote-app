@@ -26,7 +26,7 @@ const quoteSchema = mongoose.Schema({
         required: true
     }
 }, {
-		timestamps: true
+    timestamps: true
 });
 
 const Quote = mongoose.model("Quote", quoteSchema);
