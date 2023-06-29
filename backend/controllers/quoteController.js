@@ -18,10 +18,14 @@ const createQuote = asyncHandler(async (req, res) => {
         amountDue
     });
 
-    user.quotes.push(quote._id);
-    await user.save();
-
-    res.status(201).json(quote);
+    if(quote) {
+        user.quotes.push(quote._id);
+        await user.save();
+        res.status(201).json(quote);
+    } else {
+        res.status(400);
+        throw new Error("Quote not found");
+    }
 });
 
 // @desc    Get quote by ID
