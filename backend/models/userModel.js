@@ -23,7 +23,11 @@ const userSchema = mongoose.Schema({
     city: {
         type: String,
         required: true
-    }
+    },
+    quotes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Quote"
+    }]
 }, {
     timestamps: true
 });
