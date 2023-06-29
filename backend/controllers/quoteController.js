@@ -28,7 +28,7 @@ const createQuote = asyncHandler(async (req, res) => {
 // @route   GET /api/quotes/:id
 // @access  Private
 const getQuoteById = asyncHandler(async (req, res) => {
-  const quote = await Quote.findById(req.params._id);
+  const quote = await Quote.findById(req.params.id);
 
   if(quote) {
       res.json(quote);
@@ -36,6 +36,20 @@ const getQuoteById = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error("Quote not found");
   }
+});
+
+// @desc    Get quotes by user ID
+// @route   GET /api/quotes/user/:userId
+// @access  Private
+const getUserQuotes = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.userId).populate("quotes");
+
+    if(user) {
+        res.json(user.quotes);
+    } else {
+        res.status(404);
+        throw new Error("User not found");
+    }
 });
 
 export { 
