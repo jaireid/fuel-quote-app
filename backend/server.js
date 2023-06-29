@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -17,6 +18,9 @@ app.use(express.json());
 // Send form data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// User routes
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => res.send("Server is ready!"));
 
