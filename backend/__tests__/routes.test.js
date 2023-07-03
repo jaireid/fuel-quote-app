@@ -1,29 +1,36 @@
 import supertest from "supertest";
 import app from "../app.js";
+import { v4 as uuidv4 } from "uuid";
+import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
 describe("POST /api/users", () => {
-    // test("should register a new user", async () => {
-    //     const userData = {
-    //         username: "afi",
-    //         email: "afi@example.com",
-    //         password: "wsxedcrfv",
-    //         state: "New York",
-    //         city: "New York City"
-    //     };
+    test("should register a new user", async () => {
+        // Generate a unique username and password
+        const uniqueUsername = `user-${uuidv4()}`;
 
-    //     const response = await supertest(app)
-    //         .post("/api/users")
-    //         .send(userData);
+        const userData = {
+            username: uniqueUsername,
+            email: `${uniqueUsername}@example.com`,
+            password: "wsxedcrfv",
+            state: "New York",
+            city: "New York City"
+        };
 
-    //     console.log(response.body);
+        // Make a request to the users route
+        const response = await supertest(app)
+            .post("/api/users")
+            .send(userData);
 
-    //     expect(response.status).toBe(201);
-    //     expect(response.body).toHaveProperty("_id");
-    //     expect(response.body).toHaveProperty("username", userData.username);
-    //     expect(response.body).toHaveProperty("email", userData.email);
-    //     expect(response.body).toHaveProperty("state", userData.state);
-    //     expect(response.body).toHaveProperty("city", userData.city);
-    // });
+        console.log(response.body);
+
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty("_id");
+        expect(response.body).toHaveProperty("username", userData.username);
+        expect(response.body).toHaveProperty("email", userData.email);
+        expect(response.body).toHaveProperty("state", userData.state);
+        expect(response.body).toHaveProperty("city", userData.city);
+    });
 
     test("should return an error when registering a user with an existing email", async () => {
         const userData = {
@@ -34,6 +41,7 @@ describe("POST /api/users", () => {
             city: "Houston"
         };
 
+        // Make a request to the users route with existing user
         const response = await supertest(app)
             .post("/api/users")
             .send(userData);
@@ -50,6 +58,7 @@ describe("POST /api/users/auth", () => {
             password: "testpassword"
         };
 
+        // Make a request to the users auth route
         const response = await supertest(app)
             .post("/api/users/auth")
             .send(credentials);
@@ -66,6 +75,7 @@ describe("POST /api/users/auth", () => {
             password: "test1234"
         };
 
+        // Make a request to the users auth route without valid password
         const response = await supertest(app)
             .post("/api/users/auth")
             .send(credentials);
@@ -85,5 +95,53 @@ describe("POST /api/users/logout", () => {
         expect(response.status).toBe(200);
         expect(response.body).toEqual({ message: "User logged out" });
         expect(response.header["set-cookie"]).toBeDefined();
+    });
+});
+
+describe("GET /api/users/profile", () => {
+    test("should get the user profile", async () => {
+        // Generate a unique username
+        const uniqueUsername = `user-${uuidv4()}`;
+
+        // Create a mock user with the unique username
+        const user = await User.create({
+            username: uniqueUsername,
+            email: `${uniqueUsername}@example.com`,
+            password: "user-password",
+            state: "user-state",
+            city: "user-city",
+        });
+
+        // Create a mock responce object with a cookie method
+        const res = {
+            cookie: jest.fn(),
+        };
+
+        // Generate a valid token associated with the user
+        generateToken(res, user._id);
+
+        // Make a request to the get user profile route
+        const response = await supertest(app)
+            .get("/api/users/profile")
+            .set("Cookie", [`jwt=${res.cookie.mock.calls[0][1]}`]);
+            // .set("Cookie", [`jwt=${token}`]);
+
+        expect(response.body).toEqual({
+            _id: user._id.toString(),
+            username: user.username,
+            email: user.email,
+            state: user.state,
+            city: user.city,
+        });
+    });
+
+    test("should return an error when user is not authenticated", async () => {
+        // Make a request to the get user profile route without authentication
+        const response = await supertest(app)
+        .get("/api/users/profile")
+        .send();
+
+        expect(response.status).toBe(401);
+        expect(response.body.message).toBe("Not authorized, no token");
     });
 });
