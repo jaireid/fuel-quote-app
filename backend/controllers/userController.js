@@ -44,7 +44,6 @@ const registerUser = asyncHandler(async (req, res) => {
         city
     });
 
-
     if(user) {
         generateToken(res, user._id);
         res.status(201).json({
