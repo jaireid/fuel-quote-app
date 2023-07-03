@@ -9,7 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
   return(
       <>
-            <h1>Fuel Quote App!</h1>
+          <h1>Fuel Quote App!</h1>
       </>
   )
 
