@@ -42,3 +42,35 @@ describe("POST /api/users", () => {
         expect(response.body.message).toBe("User already exists");
     });
 });
+
+describe("POST /api/users/auth", () => {
+    test("should authenticate a user with valid credentials", async () => {
+        const credentials = {
+            email: "qwerty@example.com",
+            password: "testpassword"
+        };
+
+        const response = await supertest(app)
+            .post("/api/users/auth")
+            .send(credentials);
+
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty("_id");
+        expect(response.body).toHaveProperty("username");
+        expect(response.body).toHaveProperty("email", credentials.email);
+    });
+
+    test("should return an error when authenticating a user with invalid credentials", async () => {
+        const credentials = {
+            email: "test@example.com",
+            password: "test1234"
+        };
+
+        const response = await supertest(app)
+            .post("/api/users/auth")
+            .send(credentials);
+
+        expect(response.status).toBe(401);
+        expect(response.body.message).toBe("Invalid email or password");
+    });
+});
