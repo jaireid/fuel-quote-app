@@ -4,12 +4,15 @@
 // import Profile from './components/Profile.jsx';
 // import Quote from './components/Quote.jsx';
 // import  History from './components/History.jsx';
+import Header from './components/Header';
+import HomeScreen from './screens/HomeScreen';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return(
       <>
-          <h1>Fuel Quote App!</h1>
+          <Header />
+          <HomeScreen />
       </>
   )
 
