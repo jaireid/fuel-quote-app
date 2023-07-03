@@ -12,17 +12,15 @@ describe("POST /api/users", () => {
         const userData = {
             username: uniqueUsername,
             email: `${uniqueUsername}@example.com`,
-            password: "wsxedcrfv",
-            state: "New York",
-            city: "New York City"
+            password: "user-password",
+            state: "user-state",
+            city: "user-city",
         };
 
         // Make a request to the users route
         const response = await supertest(app)
             .post("/api/users")
             .send(userData);
-
-        console.log(response.body);
 
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty("_id");
@@ -124,7 +122,6 @@ describe("GET /api/users/profile", () => {
         const response = await supertest(app)
             .get("/api/users/profile")
             .set("Cookie", [`jwt=${res.cookie.mock.calls[0][1]}`]);
-            // .set("Cookie", [`jwt=${token}`]);
 
         expect(response.body).toEqual({
             _id: user._id.toString(),
@@ -143,5 +140,76 @@ describe("GET /api/users/profile", () => {
 
         expect(response.status).toBe(401);
         expect(response.body.message).toBe("Not authorized, no token");
+    });
+});
+
+describe("PUT /api/users/profile", () => {
+    test("should update the user profile", async () => {
+        // Generate a unique username
+        const uniqueUsername = `user-${uuidv4()}`;
+        const updatedUsername = `user-${uuidv4()}`;
+
+        // Create a mock user with the unique username
+        const user = await User.create({
+            username: uniqueUsername,
+            email: `${uniqueUsername}@example.com`,
+            password: "user-password",
+            state: "user-state",
+            city: "user-city",
+        });
+
+        // Create a mock responce object with a cookie method
+        const res = {
+            cookie: jest.fn(),
+        };
+
+        // Generate a valid token associated with the user
+        generateToken(res, user._id);
+
+
+        // Make a request to the update user profile route
+        const response = await supertest(app)
+        .put("/api/users/profile")
+        .set("Cookie", [`jwt=${res.cookie.mock.calls[0][1]}`])
+        .send({
+            username: updatedUsername,
+            email: `${updatedUsername}@example.com`,
+            state: "updated-state",
+            city: "updated-city",
+        });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({
+            _id: user._id.toString(),
+            username: updatedUsername,
+            email: `${updatedUsername}@example.com`,
+            state: "updated-state",
+            city: "updated-city",
+        });
+    });
+
+    test("should return an error when user is not authenticated", async () => {
+        // Make a request to the update user profile route without authentication
+        const response = await supertest(app)
+        .put("/api/users/profile")
+        .send({
+            username: "updated-username",
+        });
+
+        expect(response.status).toBe(401);
+        expect(response.body.message).toBe("Not authorized, no token");
+    });
+
+    test("should return an error when user is not found", async () => {
+        // Make a request to the update user profile route with an invalid token
+        const response = await supertest(app)
+        .put("/api/users/profile")
+        .set("Cookie", ["jwt=invalid-token"])
+        .send({
+            username: "updated-username",
+        });
+
+        expect(response.status).toBe(401);
+        expect(response.body.message).toBe("Not authorized, invalid token");
     });
 });
