@@ -1,80 +1,80 @@
-import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
+import { useState } from 'react';
+// import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
+// import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
   
 export default function Profile() {
-    const [putData, putQuoteData] = useState({});
-    const [validated, setValidated] = useState(false);
-    const [name, setName] = useState('')
-    const [address1, setAddress1] = useState('') 
-    const [address2, setAddress2] = useState('')
-    const [city, setCity] = useState('')
-    const [region, setRegion] = useState('')
-    const [zipcode, setZipcode] = useState('')
+    // const [putData, putQuoteData] = useState({});
+    // const [validated, setValidated] = useState(false);
+    // const [name, setName] = useState('')
+    // const [address1, setAddress1] = useState('') 
+    // const [address2, setAddress2] = useState('')
+    // const [city, setCity] = useState('')
+    // const [region, setRegion] = useState('')
+    // const [zipcode, setZipcode] = useState('')
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const form = event.currentTarget;
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     const form = event.currentTarget;
 
-        if(form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            setValidated(true);
-            return;
-        }
+    //     if(form.checkValidity() === false) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //         setValidated(true);
+    //         return;
+    //     }
 
-        setValidated(true);
+    //     setValidated(true);
 
-        fetch('http://localhost:3059/profile', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(putData)
-          })
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => console.error(error));
-    };
+    //     fetch('http://localhost:3059/profile', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(putData)
+    //       })
+    //         .then(response => response.json())
+    //         .then(result => console.log(result))
+    //         .catch(error => console.error(error));
+    // };
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
+    // const handleChange = (event) => {
+    //     const { name, value } = event.target;
 
-        if (name === "userID") {
-            const id = value
-            putQuoteData({ ...putData, id});
-        }
-        if (name === "name") {
-            const name = value
-            putQuoteData({ ...putData, name});
-        }
-        if (name === "address1") {
-            const address1 = value
-            putQuoteData({ ...putData, address1});
-        }
-        if (name === "address2") {
-            const address2 = value
-            putQuoteData({ ...putData, address2});
-        }
-        if (name === "city") {
-            const city = value
-            putQuoteData({ ...putData, city});
-        }    
-        if (name === "region") {
-            const region = value
-            putQuoteData({ ...putData, region});
-        }
-        if (name === "zipcode") {
-            const zipcode = value
-            putQuoteData({ ...putData, zipcode});
-        }  
-    }
+    //     if (name === "userID") {
+    //         const id = value
+    //         putQuoteData({ ...putData, id});
+    //     }
+    //     if (name === "name") {
+    //         const name = value
+    //         putQuoteData({ ...putData, name});
+    //     }
+    //     if (name === "address1") {
+    //         const address1 = value
+    //         putQuoteData({ ...putData, address1});
+    //     }
+    //     if (name === "address2") {
+    //         const address2 = value
+    //         putQuoteData({ ...putData, address2});
+    //     }
+    //     if (name === "city") {
+    //         const city = value
+    //         putQuoteData({ ...putData, city});
+    //     }    
+    //     if (name === "region") {
+    //         const region = value
+    //         putQuoteData({ ...putData, region});
+    //     }
+    //     if (name === "zipcode") {
+    //         const zipcode = value
+    //         putQuoteData({ ...putData, zipcode});
+    //     }  
+    // }
 
     return (
         <>
-            <h1>Profile Management</h1>
+            <h1>Profile</h1>
             {/* The noValidate attribute disables the default browser UI for forms */}
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            {/* <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className='mb-3' controlId='userID'>
                     <Form.Label>User ID</Form.Label>
                     <InputGroup hasValidation>
@@ -228,7 +228,7 @@ export default function Profile() {
 					</InputGroup>
         		</Form.Group>
                 <Button type='submit' variant='outline-dark'>Save Changes</Button>
-            </Form>
+            </Form> */}
         </>
     );
 }

@@ -1,24 +1,23 @@
 import { useEffect, useState } from 'react';
-import Table from 'react-bootstrap/Table';
-import Stack from 'react-bootstrap/Stack';
 
 export default function History() {
-  const [fillData, setFillData] = useState([]);
+//   const [fillData, setFillData] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:3059/quotes/fill')
-        .then(
-            response => response.json()
-        )
-        .then(
-            data => {
-                setFillData(data);
-        })
-  }, []);
+//   useEffect(() => {
+//     fetch('http://localhost:3059/quotes/fill')
+//         .then(
+//             response => response.json()
+//         )
+//         .then(
+//             data => {
+//                 setFillData(data);
+//         })
+//   }, []);
 
   return (
     <>
-        <Stack gap={3} style={{
+        <h1>Quote History</h1>
+        {/* <Stack gap={3} style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
@@ -49,7 +48,7 @@ export default function History() {
                         </tbody>
                     </Table>
                 </div>
-        </Stack>
+        </Stack> */}
     </>
   );
 }
