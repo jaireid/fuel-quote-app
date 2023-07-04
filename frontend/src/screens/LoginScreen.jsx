@@ -12,15 +12,15 @@ const LoginScreen = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-50">
-      <div className="flex flex-1 flex-col justify-center px-6 py-36 lg:px-8">
+      <div className="flex flex-1 flex-col justify-center px-6 py-20 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={submitHandler}>
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-5" onSubmit={submitHandler}>
             <div>
               <label
                 htmlFor="email"
@@ -75,10 +75,10 @@ const LoginScreen = () => {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-8 text-center text-sm text-gray-500">
             Not a member?{" "}
             <Link
-              href="#"
+              to="/register"
               className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
             >
               Register

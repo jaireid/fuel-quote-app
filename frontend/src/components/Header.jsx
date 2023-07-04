@@ -48,7 +48,7 @@ const Header = () => {
           </button>
         </div>
         <div
-          className={`items-center justify-between w-full lg:mr-14 md:flex md:w-auto md:order-1 ${
+          className={`items-center justify-between w-full lg:mr-12 md:flex md:w-auto md:order-1 ${
             isMenuOpen ? "block" : "hidden"
           }`}
           id="navbar-sticky"
