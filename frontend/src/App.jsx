@@ -1,38 +1,13 @@
-// import Navigation from './components/Navigation.jsx';
-// import Login from './components/Login.jsx';
-// import Register from './components/Register.jsx';
-// import Profile from './components/Profile.jsx';
-// import Quote from './components/Quote.jsx';
-// import  History from './components/History.jsx';
+import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
-import HomeScreen from "./screens/HomeScreen";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  return(
-      <>
-          <Header />
-          <HomeScreen />
-      </>
-  )
-
-  // return (
-  //   <div className='App'>
-  //     <BrowserRouter>
-  //       <Navigation />
-  //       <div className='page'>
-  //         <Routes>
-  //           <Route path='/' element={<h1>Home Page</h1>} />
-  //           <Route path='/quote' element={<Quote />} />
-  //           <Route path='/history' element={<History />} />
-  //           <Route path='/profile' element={<Profile />} />
-  //           <Route path='/register' element={<Register />} />
-  //           <Route path='/login' element={<Login />} />
-  //         </Routes>
-  //       </div>
-  //     </BrowserRouter>
-  //   </div>
-  // )
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
 }
 
-export default App
+export default App;
