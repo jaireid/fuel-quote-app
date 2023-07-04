@@ -48,44 +48,44 @@ const Header = () => {
           </button>
         </div>
         <div
-          className={`items-center justify-between w-full lg:mr-12 md:flex md:w-auto md:order-1 ${
+          className={`items-center justify-between w-full lg:mr-14 md:flex md:w-auto md:order-1 ${
             isMenuOpen ? "block" : "hidden"
           }`}
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
             <li>
-              <a
-                href="#"
+              <Link
+                to="/form"
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
                 aria-current="page"
               >
                 Quote Form
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/history"
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
               >
                 History
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/profile"
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
               >
                 Profile
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="contact"
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
               >
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
