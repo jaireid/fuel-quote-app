@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Hero = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-100">
@@ -14,12 +16,12 @@ const Hero = () => {
             </p>
             <div className="text-center">
               <div className="mt-6 flex justify-left gap-x-6">
-                <a
-                  href="/register"
+                <Link
+                  to="/register"
                   className="bg-transparent hover:bg-blue-500 text-blue-600 font-semibold hover:text-white py-2 px-4 border border-blue-600 hover:border-transparent rounded"
                 >
                   Register Today
-                </a>
+                </Link>
               </div>
             </div>
           </div>
