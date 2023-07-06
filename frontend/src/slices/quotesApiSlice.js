@@ -4,18 +4,25 @@ import { apiSlice } from "./apiSlice";
 const QUOTES_URL = "/api/quotes";
 
 // Inject quotes endpoints
-export const quotesApiSlice = apiSlice.injectEndpoints({
+export const quoteApiSlice = apiSlice.injectEndpoints({
   // Create quote endpoint
-  endpoint: (builder) => ({
+  endpoints: (builder) => ({
     // Query function for the create quote endpoint
-    create: builder.mutation({
+    createQuote: builder.mutation({
       query: (data) => ({
-        url: `${QUOTES_URL}`, // Set the URL for the create quote endpoint
-        method: "POST", // Set the HTTP method to "POST"
+        url: `${QUOTES_URL}`, // Set the URL for the endpoint
+        method: "POST", // Set the HTTP method
         body: data, // Set the request body to the provided data
+      }),
+    }),
+    // Query function for the get user quotes endpoint
+    getUserQuotes: builder.query({
+      query: (userId) => ({
+        url: `${QUOTES_URL}/user/${userId}`,
+        method: "GET",
       }),
     }),
   }),
 });
 
-export const { createQuoteMutation } = quotesApiSlice;
+export const { useCreateQuoteMutation, useGetUserQuotesQuery } = quoteApiSlice;
