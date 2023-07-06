@@ -4,7 +4,7 @@ const QuoteScreen = () => {
   const [gallons, setGallons] = useState(0);
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState(new Date());
+  const [deliveryDate, setDeliveryDate] = useState(new Date().toISOString());
   const [suggestedPrice, setSuggestedPrice] = useState(0);
   const [amountDue, setAmountDue] = useState(0);
 
@@ -61,7 +61,7 @@ const QuoteScreen = () => {
                     name="city"
                     type="text"
                     required
-                    readonly
+                    readOnly
                     disabled
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     value={city}
@@ -84,7 +84,7 @@ const QuoteScreen = () => {
                     name="state"
                     type="text"
                     required
-                    readonly
+                    readOnly
                     disabled
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     value={state}
@@ -127,7 +127,7 @@ const QuoteScreen = () => {
                   name="suggestedPrice"
                   type="number"
                   required
-                  readonly
+                  readOnly
                   disabled
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={suggestedPrice}
@@ -148,7 +148,7 @@ const QuoteScreen = () => {
                   name="amountDue"
                   type="number"
                   required
-                  readonly
+                  readOnly
                   disabled
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={amountDue}

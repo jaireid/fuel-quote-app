@@ -12,7 +12,7 @@ const QuoteHistoryScreen = () => {
     <div className="relative min-h-screen overflow-x-auto bg-gray-50 shadow-md sm:rounded-lg">
       <div className="flex flex-1 flex-col justify-center px-6 py-24 lg:px-8">
         <table className="w-full text-sm text-left text-gray-500">
-          <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+          <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
             Your Quotes
             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
               Browse a list of your previous quotes.
