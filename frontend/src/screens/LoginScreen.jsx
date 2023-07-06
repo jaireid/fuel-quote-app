@@ -1,13 +1,44 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLoginMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Navigation hook
+  const navigate = useNavigate("");
+  // Redux dispatch function hook
+  const dispatch = useDispatch("");
+
+  // Mutation hook for the login operation
+  const [login, { isLoading }] = useLoginMutation();
+
+  // // Selects the user info from the Redux store
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      // Redirect to home page if user info is available
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submit");
+    try {
+      // Perform login mutation and get the response
+      const res = await login({ email, password }).unwrap();
+      // Dispatch an action to store the received credentials
+      dispatch(setCredentials({ ...res }));
+      // Redirect to home page
+      navigate("/");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
