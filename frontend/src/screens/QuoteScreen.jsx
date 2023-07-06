@@ -45,49 +45,51 @@ const QuoteScreen = () => {
               </div>
             </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="state"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  State
-                </label>
+            <div className="sm:col-span-3 sm:col-start-1 grid grid-cols-2 gap-6">
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="city"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    City
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    required
+                    readonly
+                    disabled
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    value={city}
+                  />
+                </div>
               </div>
-              <div className="mt-2">
-                <input
-                  id="state"
-                  name="state"
-                  type="text"
-                  required
-                  readonly
-                  disabled
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                  value={state}
-                />
-              </div>
-            </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  City
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="city"
-                  name="city"
-                  type="text"
-                  required
-                  readonly
-                  disabled
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                  value={city}
-                />
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="state"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    State
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input
+                    id="state"
+                    name="state"
+                    type="text"
+                    required
+                    readonly
+                    disabled
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    value={state}
+                  />
+                </div>
               </div>
             </div>
 
@@ -117,7 +119,7 @@ const QuoteScreen = () => {
                 htmlFor="suggestedPrice"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Suggested Price
+                Suggested Price Per Gallon
               </label>
               <div className="mt-2">
                 <input

@@ -14,6 +14,7 @@ import HomeScreen from "./screens/HomeScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import QuoteScreen from "./screens/QuoteScreen";
+import QuoteHistoryScreen from "./screens/QuoteHistoryScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<LoginScreen />}></Route>
       <Route path="/register" element={<RegisterScreen />}></Route>
       <Route path="/quote" element={<QuoteScreen />}></Route>
+      <Route path="/history" element={<QuoteHistoryScreen />}></Route>
     </Route>
   )
 );
