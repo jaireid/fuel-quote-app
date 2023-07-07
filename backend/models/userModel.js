@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
+      minLength: 8,
       required: true,
     },
     address: {
@@ -23,6 +24,8 @@ const userSchema = mongoose.Schema(
     },
     zipcode: {
       type: String,
+      minLength: 5,
+      maxLength: 5,
       required: true,
     },
     state: {
