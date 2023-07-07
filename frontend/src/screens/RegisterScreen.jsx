@@ -7,10 +7,12 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 
 const RegisterScreen = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipCode] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
 
@@ -150,6 +152,46 @@ const RegisterScreen = () => {
             <div className="sm:col-span-3 sm:col-start-1 grid grid-cols-2 gap-6">
               <div>
                 <label
+                  htmlFor="address"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Address
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="zipcode"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  ZIP Code
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="zipcode"
+                    id="zipcode"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={zipcode}
+                    onChange={(e) => setZipCode(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="sm:col-span-3 sm:col-start-1 grid grid-cols-2 gap-6">
+              <div>
+                <label
                   htmlFor="city"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
@@ -160,7 +202,6 @@ const RegisterScreen = () => {
                     type="text"
                     name="city"
                     id="city"
-                    autoComplete="address-level2"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -170,7 +211,7 @@ const RegisterScreen = () => {
 
               <div>
                 <label
-                  htmlFor="region"
+                  htmlFor="state"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   State
@@ -178,9 +219,8 @@ const RegisterScreen = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="region"
-                    id="region"
-                    autoComplete="address-level1"
+                    name="state"
+                    id="state"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
