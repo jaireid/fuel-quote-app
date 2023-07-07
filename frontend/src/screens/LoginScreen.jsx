@@ -18,7 +18,7 @@ const LoginScreen = () => {
   // Mutation hook for the login operation
   const [login, { isLoading }] = useLoginMutation();
 
-  // // Selects the user info from the Redux store
+  // Selects the user info from the Redux store
   const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {

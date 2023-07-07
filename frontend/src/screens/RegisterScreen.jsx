@@ -1,5 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useRegisterMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
@@ -9,9 +14,40 @@ const RegisterScreen = () => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
 
+  // Navigation hook
+  const navigate = useNavigate("");
+  // Redux dispatch function hook
+  const dispatch = useDispatch("");
+
+  // Mutation hook for the register operation
+  const [register, { isLoading }] = useRegisterMutation();
+
+  // Selects the user info from the Redux store
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      // Redirect to quote form if user info is available
+      navigate("/quote");
+    }
+  }, [navigate, userInfo]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submit");
+    if(password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    } else {
+      try {
+        // Perform register mutation and get the response
+        const res = await register({ username, email, password, state, city }).unwrap();
+        // Dispatch an action to store the received credentials
+        dispatch(setCredentials({ ...res }));
+        // Redirect to quote form
+        navigate("/quote");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
   };
 
   return (
@@ -152,6 +188,8 @@ const RegisterScreen = () => {
                 </div>
               </div>
             </div>
+
+            {isLoading && <Loader />}
 
             <div>
               <button
