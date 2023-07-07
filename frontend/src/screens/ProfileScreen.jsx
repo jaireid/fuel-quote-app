@@ -64,8 +64,8 @@ const ProfileScreen = () => {
           </h2>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-5" onSubmit={submitHandler}>
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-3" onSubmit={submitHandler}>
             <div>
               <label
                 htmlFor="username"
@@ -158,9 +158,9 @@ const ProfileScreen = () => {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
-                    name="address"
                     id="address"
+                    name="address"
+                    type="text"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
@@ -177,10 +177,12 @@ const ProfileScreen = () => {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
-                    name="zipcode"
                     id="zipcode"
+                    name="zipcode"
+                    type="text"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    min="5"
+                    max="5"
                     value={zipcode}
                     onChange={(e) => setZipCode(e.target.value)}
                   />
@@ -198,9 +200,9 @@ const ProfileScreen = () => {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
                     name="city"
                     id="city"
+                    type="text"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -217,9 +219,9 @@ const ProfileScreen = () => {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
                     name="state"
                     id="state"
+                    type="text"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
