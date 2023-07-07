@@ -31,9 +31,20 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userExists = await User.findOne({ email });
 
+  // Validation Checks
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
+  }
+
+  if (zipcode.length !== 5) {
+    res.status(400);
+    throw new Error("Zipcode must be exactly 5 characters long");
+  }
+
+  if (password.length <= 8) {
+    res.status(400);
+    throw new Error("Password must be longer than 8 characters");
   }
 
   const user = await User.create({
@@ -107,12 +118,28 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     user.address = req.body.address || user.address;
-    user.zipcode = req.body.zipcode || user.zipcode;
+
+    // Validation Checks
+    if (req.body.zipcode) {
+      if (req.body.zipcode.length !== 5) {
+        res.status(400);
+        throw new Error("Zipcode must be exactly 5 characters long");
+      } else {
+        user.zipcode = req.body.zipcode || user.zipcode;
+      }
+    }
+
     user.state = req.body.state || user.state;
     user.city = req.body.city || user.city;
 
+    // Validation Checks
     if (req.body.password) {
-      user.password = req.body.password || user.password;
+      if (req.body.password.length <= 8) {
+        res.status(400);
+        throw new Error("Password must be longer than 8 characters");
+      } else {
+        user.password = req.body.password;
+      }
     }
 
     const updateUser = await user.save();
