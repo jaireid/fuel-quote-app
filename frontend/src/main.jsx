@@ -13,8 +13,10 @@ import "./index.css";
 import HomeScreen from "./screens/HomeScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
+import PrivateRoute from "./components/PrivateRoute";
 import QuoteScreen from "./screens/QuoteScreen";
 import QuoteHistoryScreen from "./screens/QuoteHistoryScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,8 +24,11 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />}></Route>
       <Route path="/login" element={<LoginScreen />}></Route>
       <Route path="/register" element={<RegisterScreen />}></Route>
-      <Route path="/quote" element={<QuoteScreen />}></Route>
-      <Route path="/history" element={<QuoteHistoryScreen />}></Route>
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="/quote" element={<QuoteScreen />}></Route>
+        <Route path="/history" element={<QuoteHistoryScreen />}></Route>
+        <Route path="/profile" element={<ProfileScreen />}></Route>
+      </Route>
     </Route>
   )
 );
