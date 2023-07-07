@@ -41,9 +41,23 @@ const RegisterScreen = () => {
     } else {
       try {
         // Perform register mutation and get the response
-        const res = await register({ username, email, password, address, zipcode, state, city }).unwrap();
+        const res = await register({
+          username,
+          email,
+          password,
+          address,
+          zipcode,
+          state,
+          city,
+        }).unwrap();
         // Dispatch an action to store the received credentials
-        dispatch(setCredentials({ ...res }));
+        dispatch(
+          setCredentials({
+            _id: res._id,
+            username: res.username,
+            email: res.email,
+          })
+        );
         // Redirect to quote form
         navigate("/quote");
       } catch (err) {
@@ -119,6 +133,7 @@ const RegisterScreen = () => {
                   id="password"
                   name="password"
                   type="password"
+                  autoComplete="off"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={password}
@@ -141,6 +156,7 @@ const RegisterScreen = () => {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
+                  autoComplete="off"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={confirmPassword}
@@ -184,8 +200,8 @@ const RegisterScreen = () => {
                     type="text"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    min="5"
-                    max="5"
+                    minLength="5"
+                    maxLength="5"
                     value={zipcode}
                     onChange={(e) => setZipCode(e.target.value)}
                   />

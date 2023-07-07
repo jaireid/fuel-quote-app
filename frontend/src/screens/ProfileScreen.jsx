@@ -47,7 +47,13 @@ const ProfileScreen = () => {
           city,
         }).unwrap();
         // Dispatch an action to store the received credentials
-        dispatch(setCredentials({ ...res }));
+        dispatch(
+          setCredentials({
+            _id: res._id,
+            username: res.username,
+            email: res.email,
+          })
+        );
         toast.success("Profile update");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -60,7 +66,7 @@ const ProfileScreen = () => {
       <div className="flex flex-1 flex-col justify-center px-6 py-16 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create an account
+            Update Profile
           </h2>
         </div>
 
@@ -120,6 +126,7 @@ const ProfileScreen = () => {
                   id="password"
                   name="password"
                   type="password"
+                  autoComplete="on"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -141,6 +148,7 @@ const ProfileScreen = () => {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
+                  autoComplete="on"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -181,8 +189,8 @@ const ProfileScreen = () => {
                     name="zipcode"
                     type="text"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    min="5"
-                    max="5"
+                    minLength="5"
+                    maxLength="5"
                     value={zipcode}
                     onChange={(e) => setZipCode(e.target.value)}
                   />
