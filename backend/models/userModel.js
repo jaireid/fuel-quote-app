@@ -1,36 +1,49 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema(
+  {
     username: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    zipcode: {
+      type: String,
+      required: true,
     },
     state: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     city: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    quotes: [{
+    quotes: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Quote"
-    }]
-}, {
-    timestamps: true
-});
+        ref: "Quote",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // Middleware for encryption
 userSchema.pre("save", async function(next) {
