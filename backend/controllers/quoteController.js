@@ -16,6 +16,10 @@ const createQuote = asyncHandler(async (req, res) => {
       deliveryDate,
       suggestedPrice,
       amountDue,
+      address: user.address,
+      zipcode: user.zipcode,
+      state: user.state,
+      city: user.city,
     });
 
     if (quote) {

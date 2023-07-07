@@ -6,6 +6,16 @@ const quoteSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    address: {
+      type: String,
+      required: true,
+    },
+    zipcode: {
+      type: String,
+      minLength: 5,
+      maxLength: 5,
+      required: true,
+    },
     state: {
       type: String,
       required: true,
