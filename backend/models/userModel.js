@@ -46,21 +46,21 @@ const userSchema = mongoose.Schema(
 );
 
 // Middleware for encryption
-userSchema.pre("save", async function(next) {
-    // If user password is not changed move on
-    if(!this.isModified("password")) {
-        next();
-    }
+userSchema.pre("save", async function (next) {
+  // If user password is not changed move on
+  if (!this.isModified("password")) {
+    next();
+  }
 
-    // If password is modified hash it
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+  // If password is modified hash it
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Verify entered password
-userSchema.methods.matchPassword = async function(enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-}
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 const User = mongoose.model("User", userSchema);
 

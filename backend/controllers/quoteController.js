@@ -6,26 +6,27 @@ import User from "../models/userModel.js";
 // @route   POST /api/quotes
 // @access  Private
 const createQuote = asyncHandler(async (req, res) => {
-    const { gallons, state, city, deliveryDate, suggestedPrice, amountDue } = req.body;
-    const user = req.user;
+  const { gallons, state, city, deliveryDate, suggestedPrice, amountDue } =
+    req.body;
+  const user = req.user;
 
-    const quote = await Quote.create({
-        gallons,
-        state,
-        city,
-        deliveryDate,
-        suggestedPrice,
-        amountDue
-    });
+  const quote = await Quote.create({
+    gallons,
+    state,
+    city,
+    deliveryDate,
+    suggestedPrice,
+    amountDue,
+  });
 
-    if(quote) {
-        user.quotes.push(quote._id);
-        await user.save();
-        res.status(201).json(quote);
-    } else {
-        res.status(400);
-        throw new Error("Quote not found");
-    }
+  if (quote) {
+    user.quotes.push(quote._id);
+    await user.save();
+    res.status(201).json(quote);
+  } else {
+    res.status(400);
+    throw new Error("Quote not found");
+  }
 });
 
 // @desc    Get quote by ID
@@ -34,11 +35,11 @@ const createQuote = asyncHandler(async (req, res) => {
 const getQuoteById = asyncHandler(async (req, res) => {
   const quote = await Quote.findById(req.params.id);
 
-  if(quote) {
-      res.json(quote);
+  if (quote) {
+    res.json(quote);
   } else {
-      res.status(404);
-      throw new Error("Quote not found");
+    res.status(404);
+    throw new Error("Quote not found");
   }
 });
 
@@ -46,18 +47,14 @@ const getQuoteById = asyncHandler(async (req, res) => {
 // @route   GET /api/quotes/user/:userId
 // @access  Private
 const getUserQuotes = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.userId).populate("quotes");
+  const user = await User.findById(req.params.userId).populate("quotes");
 
-    if(user) {
-        res.json(user.quotes);
-    } else {
-        res.status(404);
-        throw new Error("User not found");
-    }
+  if (user) {
+    res.json(user.quotes);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
-export { 
-    createQuote,
-    getQuoteById,
-    getUserQuotes
-};
+export { createQuote, getQuoteById, getUserQuotes };

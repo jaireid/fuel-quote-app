@@ -4,7 +4,7 @@ const notFound = (req, res, next) => {
   res.status(404);
   // Calls next piece of middleware
   next(error);
-}
+};
 
 const errorHandler = (err, req, res, next) => {
   // Check to see if status code on manual error is 200
@@ -12,15 +12,15 @@ const errorHandler = (err, req, res, next) => {
   let message = err.message;
 
   // Check for cast error
-  if(err.name === "CastError" && err.kind === "ObjectId") {
-      statusCode = 404;
-      message = "Resource not found";
+  if (err.name === "CastError" && err.kind === "ObjectId") {
+    statusCode = 404;
+    message = "Resource not found";
   }
 
   res.status(statusCode).json({
-      message,
-      stack: process.env.NODE_ENV === "production" ? null : err.stack
+    message,
+    stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
-}
+};
 
 export { notFound, errorHandler };

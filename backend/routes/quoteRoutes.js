@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
 import {
-    createQuote,
-    getQuoteById,
-    getUserQuotes
+  createQuote,
+  getQuoteById,
+  getUserQuotes,
 } from "../controllers/quoteController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
