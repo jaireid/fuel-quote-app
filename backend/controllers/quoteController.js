@@ -6,26 +6,29 @@ import User from "../models/userModel.js";
 // @route   POST /api/quotes
 // @access  Private
 const createQuote = asyncHandler(async (req, res) => {
-  const { gallons, state, city, deliveryDate, suggestedPrice, amountDue } =
+  const { gallons, deliveryDate, suggestedPrice, amountDue } =
     req.body;
-  const user = req.user;
+  const user = await User.findById(req.user._id);
 
-  const quote = await Quote.create({
-    gallons,
-    state,
-    city,
-    deliveryDate,
-    suggestedPrice,
-    amountDue,
-  });
+  if (user) {
+    const quote = await Quote.create({
+      gallons,
+      deliveryDate,
+      suggestedPrice,
+      amountDue,
+    });
 
-  if (quote) {
-    user.quotes.push(quote._id);
-    await user.save();
-    res.status(201).json(quote);
+    if (quote) {
+      user.quotes.push(quote._id);
+      await user.save();
+      res.status(201).json(quote);
+    } else {
+      res.status(400);
+      throw new Error("Quote not found");
+    }
   } else {
-    res.status(400);
-    throw new Error("Quote not found");
+    res.status(404);
+    throw new Error("User not found");
   }
 });
 
