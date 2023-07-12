@@ -18,4 +18,4 @@ export const quoteApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateQuoteMutation, useGetUserQuotesQuery } = quoteApiSlice;
+export const { useCreateQuoteMutation } = quoteApiSlice;
