@@ -14,7 +14,7 @@ describe("POST /api/users", () => {
       email: `${uniqueUsername}@example.com`,
       password: "user-password",
       address: "user-address",
-      zipcode: "user-zipcode",
+      zipcode: "00000",
       state: "user-state",
       city: "user-city",
     };
@@ -107,7 +107,7 @@ describe("GET /api/users/profile", () => {
       email: `${uniqueUsername}@example.com`,
       password: "user-password",
       address: "user-address",
-      zipcode: "user-zipcode",
+      zipcode: "00000",
       state: "user-state",
       city: "user-city",
     });
@@ -157,7 +157,7 @@ describe("PUT /api/users/profile", () => {
       email: `${uniqueUsername}@example.com`,
       password: "user-password",
       address: "user-address",
-      zipcode: "user-zipcode",
+      zipcode: "00000",
       state: "user-state",
       city: "user-city",
     });
@@ -187,7 +187,7 @@ describe("PUT /api/users/profile", () => {
       username: updatedUsername,
       email: `${updatedUsername}@example.com`,
       address: "user-address",
-      zipcode: "user-zipcode",
+      zipcode: "00000",
       state: "updated-state",
       city: "updated-city",
     });
