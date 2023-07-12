@@ -1,16 +1,24 @@
 import asyncHandler from "express-async-handler";
 import Quote from "../models/quoteModel.js";
 import User from "../models/userModel.js";
+import { calculateDiscountedPrice } from "../utils/calculateDiscount.js";
 
 // @desc    Create a new quote
 // @route   POST /api/quotes
 // @access  Private
 const createQuote = asyncHandler(async (req, res) => {
-  const { gallons, deliveryDate, suggestedPrice, amountDue } =
+  const { gallons, deliveryDate } =
     req.body;
   const user = await User.findById(req.user._id);
 
   if (user) {
+    // Base price of fuel per gallon
+    const basePrice = 3.0;
+
+    const suggestedPrice = calculateDiscountedPrice(basePrice, user);
+
+    const amountDue = gallons * suggestedPrice;
+
     const quote = await Quote.create({
       gallons,
       deliveryDate,
