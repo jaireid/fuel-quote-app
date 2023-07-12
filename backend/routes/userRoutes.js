@@ -6,6 +6,7 @@ import {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  getUserQuotes,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -16,5 +17,6 @@ router
   .route("/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
+router.route("/quote").get(protect, getUserQuotes);
 
 export default router;

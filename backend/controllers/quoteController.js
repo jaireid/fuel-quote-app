@@ -7,8 +7,7 @@ import { calculateDiscountedPrice } from "../utils/calculateDiscount.js";
 // @route   POST /api/quotes
 // @access  Private
 const createQuote = asyncHandler(async (req, res) => {
-  const { gallons, deliveryDate } =
-    req.body;
+  const { gallons, deliveryDate } = req.body;
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -44,32 +43,4 @@ const createQuote = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get quotes by user ID
-// @route   GET /api/quotes/user/:userId
-// @access  Private
-const getUserQuotes = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).populate("quotes");
-
-  if (user) {
-    // Access the populated quotes array and send it in the response
-    const quotes = user.quotes.map((quote) => {
-      return {
-        _id: quote._id,
-        gallons: quote.gallons,
-        address: quote.address,
-        zipcode: quote.zipcode,
-        state: quote.state,
-        city: quote.city,
-        deliveryDate: quote.deliveryDate,
-        suggestedPrice: quote.suggestedPrice,
-        amountDue: quote.amountDue
-      };
-    });
-    res.json(quotes);
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
-});
-
-export { createQuote, getUserQuotes };
+export { createQuote };
