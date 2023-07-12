@@ -203,7 +203,7 @@ describe("PUT /api/users/profile", () => {
     expect(response.body.message).toBe("Not authorized, no token");
   });
 
-  test("should return an error when user is not found", async () => {
+  test("should return an error for invalid token", async () => {
     // Make a request to the update user profile route with an invalid token
     const response = await supertest(app)
       .put("/api/users/profile")
