@@ -96,7 +96,7 @@ const QuoteScreen = () => {
               >
                 Suggested Price Per Gallon
               </label>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="suggestedPrice"
                   name="suggestedPrice"
@@ -104,9 +104,12 @@ const QuoteScreen = () => {
                   required
                   readOnly
                   disabled
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pl-6 pr-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={suggestedPrice.toFixed(2)}
                 />
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                  $
+                </span>
               </div>
             </div>
 
@@ -117,7 +120,7 @@ const QuoteScreen = () => {
               >
                 Amount Due
               </label>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="amountDue"
                   name="amountDue"
@@ -125,9 +128,12 @@ const QuoteScreen = () => {
                   required
                   readOnly
                   disabled
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pl-6 pr-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   value={amountDue.toFixed(2)}
                 />
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                  $
+                </span>
               </div>
             </div>
 
