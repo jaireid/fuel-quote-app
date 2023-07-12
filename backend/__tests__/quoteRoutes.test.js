@@ -2,7 +2,6 @@ import supertest from "supertest";
 import app from "../app.js";
 import { v4 as uuidv4 } from "uuid";
 import User from "../models/userModel.js";
-import Quote from "../models/quoteModel.js";
 import generateToken from "../utils/generateToken.js";
 
 describe("POST /api/quotes", () => {
