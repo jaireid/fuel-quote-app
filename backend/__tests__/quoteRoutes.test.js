@@ -43,7 +43,6 @@ describe("POST /api/quotes", () => {
         userId: user._id, // Include the user ID in the request payload
       });
 
-    // Assertion
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("_id");
     expect(response.body).toHaveProperty("gallons", gallons);
@@ -64,7 +63,18 @@ describe("POST /api/quotes", () => {
     expect(quoteIds).toContain(response.body._id.toString());
   });
 
-  // test("should return an error when user is not found", async () => {
+  test("should return an error when user is not authorized", async () => {
+    // Set gallons and date
+    const gallons = 10;
+    const deliveryDate = new Date();
 
-  // });
+    // Make a request to the quotes route without authentication
+    const response = await supertest(app).post("/api/quotes").send({
+      gallons,
+      deliveryDate,
+    });
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe("Not authorized, no token");
+  });
 });
