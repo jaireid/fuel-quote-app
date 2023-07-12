@@ -25,7 +25,7 @@ const calculateDiscountedPrice = (basePrice, user) => {
       break;
   }
 
-  return Math.round(suggestedPrice * 100) / 100;
+  return suggestedPrice;
 };
 
 export { calculateDiscountedPrice };
