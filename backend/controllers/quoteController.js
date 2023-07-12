@@ -16,7 +16,7 @@ const createQuote = asyncHandler(async (req, res) => {
 
     const suggestedPrice = calculateDiscountedPrice(basePrice, user);
 
-    const amountDue = gallons * suggestedPrice;
+    const amountDue = Math.round(gallons * suggestedPrice * 100) / 100;
 
     const quote = await Quote.create({
       gallons,
