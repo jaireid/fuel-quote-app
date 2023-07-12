@@ -38,6 +38,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+    // Query function for the get user quotes endpoint
+    getUserQuotes: builder.query({
+      query: (data) => ({
+        url: `${QUOTES_URL}/quotes}`,
+        method: "GET",
+        body: data,
+      }),
+    }),
   }),
 });
 

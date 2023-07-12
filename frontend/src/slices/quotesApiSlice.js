@@ -15,13 +15,6 @@ export const quoteApiSlice = apiSlice.injectEndpoints({
         body: data, // Set the request body to the provided data
       }),
     }),
-    // Query function for the get user quotes endpoint
-    getUserQuotes: builder.query({
-      query: (userId) => ({
-        url: `${QUOTES_URL}/user/${userId}`,
-        method: "GET",
-      }),
-    }),
   }),
 });
 
