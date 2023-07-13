@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useQuotesQuery } from "../slices/usersApiSlice";
-import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 
 const QuoteHistoryScreen = () => {
@@ -14,7 +13,7 @@ const QuoteHistoryScreen = () => {
   );
 
   useEffect(() => {
-    if (queriedQuotes) {
+    if (!queriedQuotes) {
       setQuotes(queriedQuotes);
     }
   }, [queriedQuotes]);
