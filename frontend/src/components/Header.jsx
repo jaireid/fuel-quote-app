@@ -73,7 +73,7 @@ const Header = () => {
               </button>
             </div>
             <div
-              className={`items-center justify-between w-full lg:mr-12 md:flex md:w-auto md:order-1 ${
+              className={`items-center justify-between w-full lg:mr-4 md:flex md:w-auto md:order-1 ${
                 isMenuOpen ? "block" : "hidden"
               }`}
               id="navbar-sticky"
@@ -93,7 +93,7 @@ const Header = () => {
                     to="/history"
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
                   >
-                    History
+                    Quote History
                   </Link>
                 </li>
                 <li>
@@ -101,17 +101,17 @@ const Header = () => {
                     to="/profile"
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
                   >
-                    Profile
+                    User Profile
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to="contact"
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
                   >
                     Contact
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </>
