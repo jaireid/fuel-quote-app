@@ -104,14 +104,6 @@ const Header = () => {
                     User Profile
                   </Link>
                 </li>
-                {/* <li>
-                  <Link
-                    to="contact"
-                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-600 md:p-0"
-                  >
-                    Contact
-                  </Link>
-                </li> */}
               </ul>
             </div>
           </>
