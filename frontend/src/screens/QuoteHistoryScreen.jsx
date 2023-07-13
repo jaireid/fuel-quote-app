@@ -13,7 +13,7 @@ const QuoteHistoryScreen = () => {
   );
 
   useEffect(() => {
-    if (!queriedQuotes) {
+    if (queriedQuotes) {
       setQuotes(queriedQuotes);
     }
   }, [queriedQuotes]);
