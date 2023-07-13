@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreateQuoteMutation } from "../slices/quotesApiSlice";
+import { useQuotesQuery } from "../slices/usersApiSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 
@@ -15,6 +16,9 @@ const QuoteScreen = () => {
 
   // Selects the user info from the Redux store
   const { userInfo } = useSelector((state) => state.auth);
+
+  // Refresh quote history
+  const { data: quotes, refetch } = useQuotesQuery(undefined, userInfo?._id);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -31,6 +35,9 @@ const QuoteScreen = () => {
       // Update the state variables with values from the response
       setSuggestedPrice(res.suggestedPrice);
       setAmountDue(res.amountDue);
+
+      // Refetch quotes to get the updated data
+      refetch();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

@@ -1,15 +1,23 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useQuotesQuery } from "../slices/usersApiSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 
 const QuoteHistoryScreen = () => {
+  const [quotes, setQuotes] = useState([]);
   const { userInfo } = useSelector((state) => state.auth);
 
-  const {
-    data: quotes,
-    isLoading,
-  } = useQuotesQuery(undefined, userInfo._id);
+  const { data: queriedQuotes, isLoading } = useQuotesQuery(
+    undefined,
+    userInfo._id
+  );
+
+  useEffect(() => {
+    if (queriedQuotes) {
+      setQuotes(queriedQuotes);
+    }
+  }, [queriedQuotes]);
 
   return (
     <div className="relative min-h-screen overflow-x-auto bg-gray-50 shadow-md sm:rounded-lg">
