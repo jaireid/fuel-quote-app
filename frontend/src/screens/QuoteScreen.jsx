@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreateQuoteMutation } from "../slices/quotesApiSlice";
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ const QuoteScreen = () => {
   const [suggestedPrice, setSuggestedPrice] = useState(0);
   const [amountDue, setAmountDue] = useState(0);
 
-  // Mutation hook for the register operation
+  // Mutation hook for the create operation
   const [create, { isLoading }] = useCreateQuoteMutation();
 
   // Selects the user info from the Redux store
@@ -19,7 +19,7 @@ const QuoteScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // Perform create query and get the response
+      // Perform create mutation and get the response
       const res = await create({
         _id: userInfo._id,
         gallons,

@@ -39,12 +39,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     // Query function for the get user quotes endpoint
-    getUserQuotes: builder.query({
-      query: (data) => ({
-        url: `${QUOTES_URL}/quotes}`,
-        method: "GET",
-        body: data,
-      }),
+    quotes: builder.query({
+      query: (_, userId) => `${USERS_URL}/${userId}/quotes`,
     }),
   }),
 });
@@ -54,5 +50,5 @@ export const {
   useLoginMutation,
   useUpdateUserMutation,
   useLogoutMutation,
-  useGetUserQuotesQuery,
+  useQuotesQuery,
 } = userApiSlice;

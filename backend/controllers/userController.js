@@ -160,7 +160,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get quotes by user ID
-// @route   GET /api/users/quotes
+// @route   GET /api/users/:userId/quotes
 // @access  Private
 const getUserQuotes = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).populate("quotes");
@@ -180,6 +180,7 @@ const getUserQuotes = asyncHandler(async (req, res) => {
         amountDue: quote.amountDue,
       };
     });
+
     res.json(quotes);
   } else {
     res.status(404);

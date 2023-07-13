@@ -17,6 +17,6 @@ router
   .route("/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
-router.route("/quote").get(protect, getUserQuotes);
+router.route("/:userId/quotes").get(protect, getUserQuotes);
 
 export default router;

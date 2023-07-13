@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useQuotesQuery } from "../slices/usersApiSlice";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const QuoteHistoryScreen = () => {
-  const [gallons, setGallons] = useState(0);
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState(new Date());
-  const [suggestedPrice, setSuggestedPrice] = useState(0);
-  const [amountDue, setAmountDue] = useState(0);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const {
+    data: quotes,
+    isLoading,
+    isError,
+  } = useQuotesQuery(undefined, userInfo._id);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="relative min-h-screen overflow-x-auto bg-gray-50 shadow-md sm:rounded-lg">
@@ -14,7 +23,7 @@ const QuoteHistoryScreen = () => {
         <table className="w-full text-sm text-left text-gray-500">
           <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
             Your Quotes
-            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
               Browse a list of your previous quotes.
             </p>
           </caption>
@@ -41,14 +50,19 @@ const QuoteHistoryScreen = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b hover:bg-gray-50">
-              <td className="px-6 py-4">500 gal</td>
-              <td className="px-6 py-4">Texas</td>
-              <td className="px-6 py-4">Houston</td>
-              <td className="px-6 py-4">07/13/2023</td>
-              <td className="px-6 py-4">$2.50</td>
-              <td className="px-6 py-4">$1250</td>
-            </tr>
+            {quotes?.map((quote) => (
+              <tr
+                className="bg-white border-b hover:bg-gray-50"
+                key={quote._id}
+              >
+                <td className="px-6 py-4">{quote.gallons} gal</td>
+                <td className="px-6 py-4">{quote.state}</td>
+                <td className="px-6 py-4">{quote.city}</td>
+                <td className="px-6 py-4">{quote.deliveryDate}</td>
+                <td className="px-6 py-4">${quote.suggestedPrice}</td>
+                <td className="px-6 py-4">${quote.amountDue}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
