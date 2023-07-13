@@ -53,25 +53,32 @@ const QuoteHistoryScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {quotes?.map((quote) => (
-              <tr
-                className="bg-white border-b hover:bg-gray-50"
-                key={quote._id}
-              >
-                <td className="px-6 py-4">{quote.gallons} gal</td>
-                <td className="px-6 py-4">
-                  ${quote.suggestedPrice.toFixed(2)}
-                </td>
-                <td className="px-6 py-4">${quote.amountDue.toFixed(2)}</td>
-                <td className="px-6 py-4">{quote.address}</td>
-                <td className="px-6 py-4">
-                  {quote.city}, {quote.state} {quote.zipcode}
-                </td>
-                <td className="px-6 py-4">
-                  {new Date(quote.deliveryDate).toLocaleDateString("en-US")}
-                </td>
-              </tr>
-            ))}
+            {quotes?.map((quote) => {
+              const adjustedDate = new Date(quote.deliveryDate);
+              const localDate = new Date(
+                adjustedDate.getTime() +
+                  adjustedDate.getTimezoneOffset() * 60000
+              );
+              const formattedDate = localDate.toLocaleDateString("en-US");
+
+              return (
+                <tr
+                  className="bg-white border-b hover:bg-gray-50"
+                  key={quote._id}
+                >
+                  <td className="px-6 py-4">{quote.gallons} gal</td>
+                  <td className="px-6 py-4">
+                    ${quote.suggestedPrice.toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4">${quote.amountDue.toFixed(2)}</td>
+                  <td className="px-6 py-4">{quote.address}</td>
+                  <td className="px-6 py-4">
+                    {quote.city}, {quote.state} {quote.zipcode}
+                  </td>
+                  <td className="px-6 py-4">{formattedDate}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
