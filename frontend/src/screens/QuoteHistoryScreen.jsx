@@ -33,19 +33,19 @@ const QuoteHistoryScreen = () => {
                 Gallons Requested
               </th>
               <th scope="col" className="px-6 py-3">
-                State
-              </th>
-              <th scope="col" className="px-6 py-3">
-                City
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Delivery Date
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Suggested Price
               </th>
               <th scope="col" className="px-6 py-3">
                 Amount Due
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Street Address
+              </th>
+              <th scope="col" className="px-6 py-3">
+                City, State Zip Code
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Delivery Date
               </th>
             </tr>
           </thead>
@@ -56,11 +56,17 @@ const QuoteHistoryScreen = () => {
                 key={quote._id}
               >
                 <td className="px-6 py-4">{quote.gallons} gal</td>
-                <td className="px-6 py-4">{quote.state}</td>
-                <td className="px-6 py-4">{quote.city}</td>
-                <td className="px-6 py-4">{quote.deliveryDate}</td>
-                <td className="px-6 py-4">${quote.suggestedPrice}</td>
-                <td className="px-6 py-4">${quote.amountDue}</td>
+                <td className="px-6 py-4">
+                  ${quote.suggestedPrice.toFixed(2)}
+                </td>
+                <td className="px-6 py-4">${quote.amountDue.toFixed(2)}</td>
+                <td className="px-6 py-4">{quote.address}</td>
+                <td className="px-6 py-4">
+                  {quote.city}, {quote.state} {quote.zipcode}
+                </td>
+                <td className="px-6 py-4">
+                  {new Date(quote.deliveryDate).toLocaleDateString("en-US")}
+                </td>
               </tr>
             ))}
           </tbody>
