@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useQuotesQuery } from "../slices/usersApiSlice";
 import { toast } from "react-toastify";
@@ -10,12 +9,7 @@ const QuoteHistoryScreen = () => {
   const {
     data: quotes,
     isLoading,
-    isError,
   } = useQuotesQuery(undefined, userInfo._id);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <div className="relative min-h-screen overflow-x-auto bg-gray-50 shadow-md sm:rounded-lg">
@@ -26,6 +20,7 @@ const QuoteHistoryScreen = () => {
             <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
               Browse a list of your previous quotes.
             </p>
+            {isLoading && <Loader />}
           </caption>
           <thead className="text-s text-gray-700 bg-gray-200">
             <tr>
