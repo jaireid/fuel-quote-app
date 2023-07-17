@@ -7,17 +7,17 @@ const calculateDiscountedPrice = (basePrice, user) => {
 
   // Apply state-based discounts
   switch (user.state) {
-    case "Texas":
-    case "Louisiana":
+    case "TX":
+    case "LA":
       suggestedPrice *= 0.9; // 10% discount for Texas and Louisiana
       break;
-    case "Washington":
-    case "Oregon":
+    case "WA":
+    case "OR":
       suggestedPrice *= 0.92; // 8% discount for Washington and Oregon
       break;
-    case "California":
-    case "Nevada":
-    case "Arizona":
+    case "CA":
+    case "NV":
+    case "AZ":
       suggestedPrice *= 0.95; // 5% discount for California, Nevada, and Arizona
       break;
     default:
