@@ -24,7 +24,7 @@ const LoginScreen = () => {
   useEffect(() => {
     if (userInfo) {
       // Redirect to quote form if user info is available
-      navigate("/quote");
+      navigate("/");
     }
   }, [navigate, userInfo]);
 
@@ -36,7 +36,7 @@ const LoginScreen = () => {
       // Dispatch an action to store the received credentials
       dispatch(setCredentials({ ...res }));
       // Redirect to quote form
-      navigate("/quote");
+      navigate("/");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
