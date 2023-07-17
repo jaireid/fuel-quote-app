@@ -2,8 +2,6 @@
 
 A full stack single page fuel pricing application with state-based discounts and quote history
 
-### Screenshot
-
 ![Screenshot preview for the Intro component with sign up form coding challenge](./frontend/public/quote.PNG)
 ![Screenshot preview for the Intro component with sign up form coding challenge](./frontend/public/history.PNG)
 
@@ -25,6 +23,8 @@ A full stack single page fuel pricing application with state-based discounts and
 - Custom middleware
 - MongoDB database to store users and quotes
 - Backend unit tests with Jest
+
+## Usage
 
 ### Install Dependencies
 ```
