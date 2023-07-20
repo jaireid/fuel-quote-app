@@ -59,3 +59,6 @@ npm run dev
 cd frontend
 npm run build
 ```
+
+## Useful resources
+- Travesty Media's [MERN Authentication Starter](https://github.com/bradtraversy/mern-auth)
