@@ -1,9 +1,9 @@
 # Fuel Quote
 
-A full stack single page fuel pricing application with state-based discounts and quote history
+A full stack single page fuel request application with quote history, location-based discounts, and state management.
 
-![Screenshot preview for the Intro component with sign up form coding challenge](./frontend/public/quote.PNG)
-![Screenshot preview for the Intro component with sign up form coding challenge](./frontend/public/history.PNG)
+![Screenshot preview for quote form](./frontend/public/quote.PNG)
+![Screenshot preview for quote history](./frontend/public/history.PNG)
 
 ### Built with:
 
@@ -17,14 +17,16 @@ A full stack single page fuel pricing application with state-based discounts and
 
 ### It includes the following:
 
-- JWT authentication stored in HTTP-only cookie
 - Backend API with Express & MongoDB
+- JWT authentication stored in HTTP-only cookie
 - Protected routes and endpoints
 - Custom middleware
 - MongoDB database to store users and quotes
 - Backend unit tests with Jest
 
 ## Usage
+
+- Create a MongoDB database and obtain your `MongoDB URI` - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
 
 ### Install Dependencies
 ```
@@ -41,13 +43,19 @@ MONGO_URI = your mongodb uri
 JWT_SECRET = 'yourJwtSecrect'
 ```
 
-### Run Backend
+### Run
 ```
+# Run backend
 npm run server
-```
 
-### Run Frontend
-```
+# Run frontend
 cd frontend
 npm run dev
+```
+
+## Build & Deploy
+```
+# Create frontend prod build
+cd frontend
+npm run build
 ```
